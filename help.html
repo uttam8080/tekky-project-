@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Support - FoodHub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>FoodHub</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="restaurants.html">Restaurants</a></li>
+                    <li><a href="offers.html">Offers</a></li>
+                    <li><a href="help.html" class="active">Help</a></li>
+                </ul>
+                <div class="nav-icons">
+                    <a href="cart.html" class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                    <a href="login.html" class="nav-link-btn">Sign In</a>
+                    <a href="signup.html" class="nav-link-btn signup-btn">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Help & Support</h1>
+            <p>We're here to help you with any questions or concerns</p>
+        </div>
+    </div>
+
+    <!-- Search Help -->
+    <section class="help-search" style="background: #f5f5f5; padding: 40px 0;">
+        <div class="container">
+            <div style="max-width: 600px; margin: 0 auto;">
+                <h2 style="text-align: center; margin-bottom: 20px;">How can we help?</h2>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="searchHelp" placeholder="Search for articles..." style="flex: 1; padding: 12px 15px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px;">
+                    <button onclick="searchHelpArticles()" style="padding: 12px 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Search</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Help Categories -->
+    <section class="help-categories" style="padding: 50px 0;">
+        <div class="container">
+            <h2 class="section-title">Browse by Category</h2>
+            <div class="categories-grid">
+                <div class="category-item" onclick="showCategory('ordering')">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h3>Ordering & Delivery</h3>
+                    <p>Questions about placing orders and delivery</p>
+                </div>
+                <div class="category-item" onclick="showCategory('payment')">
+                    <i class="fas fa-credit-card"></i>
+                    <h3>Payments & Refunds</h3>
+                    <p>Payment issues and refund policies</p>
+                </div>
+                <div class="category-item" onclick="showCategory('account')">
+                    <i class="fas fa-user-circle"></i>
+                    <h3>Account & Profile</h3>
+                    <p>Account management and profile settings</p>
+                </div>
+                <div class="category-item" onclick="showCategory('offers')">
+                    <i class="fas fa-tag"></i>
+                    <h3>Offers & Promo</h3>
+                    <p>How to use coupons and offers</p>
+                </div>
+                <div class="category-item" onclick="showCategory('restaurant')">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Restaurants</h3>
+                    <p>Finding restaurants and menu items</p>
+                </div>
+                <div class="category-item" onclick="showCategory('technical')">
+                    <i class="fas fa-tools"></i>
+                    <h3>Technical Issues</h3>
+                    <p>App crashes and technical problems</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" style="padding: 50px 0; background: #f9f9f9;">
+        <div class="container">
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <div class="faq-container" id="faqContainer">
+                <!-- FAQs will be populated here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Support Section -->
+    <section class="contact-support" style="padding: 50px 0;">
+        <div class="container">
+            <h2 class="section-title">Can't find what you're looking for?</h2>
+            <div class="contact-methods-grid">
+                <div class="contact-method">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email Support</h3>
+                    <p>support@foodhub.com</p>
+                    <p style="font-size: 12px; color: #999;">Response within 24 hours</p>
+                </div>
+                <div class="contact-method">
+                    <i class="fas fa-phone"></i>
+                    <h3>Call Us</h3>
+                    <p>+91-9876543210</p>
+                    <p style="font-size: 12px; color: #999;">Mon-Fri: 9AM - 6PM</p>
+                </div>
+                <div class="contact-method">
+                    <i class="fas fa-comments"></i>
+                    <h3>Live Chat</h3>
+                    <p>Chat with our team</p>
+                    <p style="font-size: 12px; color: #999;">Available 24/7</p>
+                </div>
+                <div class="contact-method">
+                    <i class="fas fa-social-twitter"></i>
+                    <h3>Social Media</h3>
+                    <p>@FoodHubSupport</p>
+                    <p style="font-size: 12px; color: #999;">Quick responses</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Section -->
+    <section class="feedback-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 50px 0;">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Share Your Feedback</h2>
+            <div style="max-width: 600px; margin: 0 auto;">
+                <form id="feedbackForm" style="display: grid; gap: 15px;">
+                    <input type="text" placeholder="Your Name" required style="padding: 12px 15px; border: none; border-radius: 6px; font-size: 14px;">
+                    <input type="email" placeholder="Your Email" required style="padding: 12px 15px; border: none; border-radius: 6px; font-size: 14px;">
+                    <textarea placeholder="Your Feedback" rows="5" required style="padding: 12px 15px; border: none; border-radius: 6px; font-size: 14px; font-family: Arial;"></textarea>
+                    <button type="submit" style="padding: 12px; background: white; color: #667eea; border: none; border-radius: 6px; cursor: pointer; font-weight: bold;">Send Feedback</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About FoodHub</h4>
+                    <p>Your trusted food delivery partner for fast, fresh, and delicious meals.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>Email: support@foodhub.com</p>
+                    <p>Phone: +91-9876543210</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FoodHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom Styles for Help Page -->
+    <style>
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .category-item {
+            background: white;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .category-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-item i {
+            font-size: 40px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .category-item h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .category-item p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 30px auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            padding: 20px;
+            background: #f9f9f9;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #f0f0f0;
+        }
+
+        .faq-question h4 {
+            color: #333;
+            margin: 0;
+            font-size: 15px;
+        }
+
+        .faq-icon {
+            color: #667eea;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-answer p {
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+            background: #fff;
+        }
+
+        .contact-methods-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .contact-method {
+            background: white;
+            border-radius: 12px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .contact-method:hover {
+            transform: translateY(-5px);
+        }
+
+        .contact-method i {
+            font-size: 40px;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .contact-method h3 {
+            color: #333;
+            margin: 10px 0;
+        }
+
+        .contact-method p {
+            color: #666;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        @media (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-methods-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+
+    <script src="js/app.js"></script>
+    <script>
+        // FAQ Data
+        const faqData = {
+            ordering: [
+                {
+                    question: 'How long will my order take to be delivered?',
+                    answer: 'Average delivery time is 30-40 minutes depending on the restaurant and your location. You can track your order in real-time on your account.'
+                },
+                {
+                    question: 'Can I schedule an order for later?',
+                    answer: 'Yes! During checkout, you can select a preferred delivery time. We allow scheduling up to 7 days in advance.'
+                },
+                {
+                    question: 'What is the minimum order value?',
+                    answer: 'Minimum order value varies by restaurant. Generally, it\'s ₹150-300. This will be clearly displayed before checkout.'
+                }
+            ],
+            payment: [
+                {
+                    question: 'What payment methods are accepted?',
+                    answer: 'We accept Credit/Debit Cards, UPI, Net Banking, Wallets, and Cash on Delivery for most locations.'
+                },
+                {
+                    question: 'Is my payment information secure?',
+                    answer: 'Yes! We use industry-standard 256-bit SSL encryption to protect all payment information.'
+                },
+                {
+                    question: 'What is your refund policy?',
+                    answer: 'If your order doesn\'t arrive or has issues, we offer full refunds within 24 hours of order placement.'
+                }
+            ],
+            account: [
+                {
+                    question: 'How do I create an account?',
+                    answer: 'Click on "Sign Up" and enter your email or phone number. You\'ll receive a verification code to complete registration.'
+                },
+                {
+                    question: 'How do I reset my password?',
+                    answer: 'Click "Forgot Password" on the login page, enter your email, and follow the reset link sent to your inbox.'
+                },
+                {
+                    question: 'Can I have multiple delivery addresses?',
+                    answer: 'Yes! You can save up to 5 addresses in your account for easy ordering from different locations.'
+                }
+            ],
+            offers: [
+                {
+                    question: 'How do I apply a promo code?',
+                    answer: 'During checkout, paste your promo code in the "Promo Code" field and click "Apply". The discount will be deducted instantly.'
+                },
+                {
+                    question: 'Can I combine multiple offers?',
+                    answer: 'Generally, you can use only one promo code per order. However, promotional offers may stack with promo codes.'
+                },
+                {
+                    question: 'What if my promo code isn\'t working?',
+                    answer: 'Check if the code is expired, meets the minimum order value, or is applicable to your selected restaurant.'
+                }
+            ],
+            restaurant: [
+                {
+                    question: 'How do I filter restaurants?',
+                    answer: 'Use the filters on the Restaurants page to sort by rating, delivery time, distance, or cuisine type.'
+                },
+                {
+                    question: 'Are all restaurants open?',
+                    answer: 'Only open restaurants are displayed. Operating hours are shown on the restaurant detail page.'
+                },
+                {
+                    question: 'Can I see restaurant reviews?',
+                    answer: 'Yes! Each restaurant displays ratings and customer reviews to help you make better choices.'
+                }
+            ],
+            technical: [
+                {
+                    question: 'The website is not loading. What should I do?',
+                    answer: 'Try clearing your browser cache, refreshing the page, or using a different browser. Contact support if the issue persists.'
+                },
+                {
+                    question: 'I\'m having trouble adding items to cart.',
+                    answer: 'Make sure you\'re logged in and the restaurant is accepting orders. Try refreshing the page or clearing cache.'
+                },
+                {
+                    question: 'How do I report a bug?',
+                    answer: 'Email us at support@foodhub.com with details of the issue, screenshots, and your browser information.'
+                }
+            ]
+        };
+
+        // Display FAQs
+        function displayFAQs(category = 'ordering') {
+            const container = document.getElementById('faqContainer');
+            const faqs = faqData[category] || faqData.ordering;
+            
+            container.innerHTML = faqs.map((faq, index) => `
+                <div class="faq-item" onclick="toggleFAQ(this)">
+                    <div class="faq-question">
+                        <h4>${faq.question}</h4>
+                        <i class="fas fa-chevron-down faq-icon"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>${faq.answer}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Toggle FAQ
+        function toggleFAQ(element) {
+            element.classList.toggle('active');
+        }
+
+        // Show category
+        function showCategory(category) {
+            displayFAQs(category);
+            document.querySelector('.faq-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Search help
+        function searchHelpArticles() {
+            const query = document.getElementById('searchHelp').value.toLowerCase();
+            if (!query) return;
+
+            showNotification('Searching for: ' + query);
+            // In a real app, this would search through all FAQs
+        }
+
+        // Handle feedback form
+        document.getElementById('feedbackForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showNotification('Thank you for your feedback!');
+            e.target.reset();
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            displayFAQs();
+        });
+    </script>
+</body>
+</html>

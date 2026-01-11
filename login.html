@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - FoodHub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>FoodHub</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="restaurants.html">Restaurants</a></li>
+                    <li><a href="offers.html">Offers</a></li>
+                    <li><a href="help.html">Help</a></li>
+                </ul>
+                <div class="nav-icons">
+                    <a href="cart.html" class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Section -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <div class="auth-header">
+                    <h1>Welcome Back!</h1>
+                    <p>Sign in to your FoodHub account</p>
+                </div>
+
+                <form class="auth-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="email">
+                            Email Address
+                            <span class="form-hint">We'll never share your email</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                            <span class="success-icon" id="emailCheck">✓</span>
+                        </div>
+                        <span class="error-message" id="emailError"></span>
+                        <span class="success-message" id="emailSuccess">Email looks good!</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            Password
+                            <span class="form-hint">At least 6 characters</span>
+                        </label>
+                        <div class="password-input">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="toggle-password" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <span class="success-icon" id="passwordCheck">✓</span>
+                        </div>
+                        <span class="error-message" id="passwordError"></span>
+                        <span class="success-message" id="passwordSuccess">Password accepted!</span>
+                    </div>
+
+                    <div class="form-group checkbox">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="remember" name="remember">
+                            <label for="remember">
+                                <span class="checkbox-custom"></span>
+                                Keep me signed in on this device
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="auth-btn" id="loginBtn">
+                        <span class="btn-text">Sign In</span>
+                        <i class="fas fa-arrow-right btn-icon"></i>
+                    </button>
+                </form>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <div class="social-login">
+                    <button type="button" class="social-btn google">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="social-btn facebook">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+                    <p><a href="#forgot">Forgot Password?</a></p>
+                </div>
+            </div>
+
+            <!-- Decorative Pizza Illustration -->
+            <div class="auth-illustration">
+                <div class="pizza-illustration">
+                    <img src="images/pizzza.png" alt="Delicious Pizza" id="scrollImage" class="pizza-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/app.js"></script>
+    <script src="js/interactive.js"></script>
+    <script>
+        // Parallax scroll effect for pizza
+        document.addEventListener("DOMContentLoaded", function() {
+            const scrollImage = document.getElementById("scrollImage");
+            if (scrollImage) {
+                function updatePizzaPosition() {
+                    const scrollY = window.scrollY || window.pageYOffset;
+                    scrollImage.style.transform = `translateY(${-scrollY * 0.5}px)`;
+                }
+                window.addEventListener("scroll", updatePizzaPosition, { passive: true });
+                updatePizzaPosition();
+            }
+        });
+
+        // Email validation
+        document.getElementById('email').addEventListener('input', function(e) {
+            const email = this.value;
+            const emailError = document.getElementById('emailError');
+            const emailSuccess = document.getElementById('emailSuccess');
+            const emailCheck = document.getElementById('emailCheck');
+            
+            if (email.length === 0) {
+                emailError.textContent = '';
+                emailSuccess.textContent = '';
+                emailCheck.style.display = 'none';
+                this.parentElement.classList.remove('success');
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                emailError.textContent = 'Please enter a valid email';
+                emailSuccess.textContent = '';
+                emailCheck.style.display = 'none';
+                this.parentElement.classList.remove('success');
+            } else {
+                emailError.textContent = '';
+                emailSuccess.textContent = 'Email looks good!';
+                emailCheck.style.display = 'inline';
+                this.parentElement.classList.add('success');
+            }
+        });
+
+        // Password validation
+        document.getElementById('password').addEventListener('input', function(e) {
+            const password = this.value;
+            const passwordError = document.getElementById('passwordError');
+            const passwordSuccess = document.getElementById('passwordSuccess');
+            const passwordCheck = document.getElementById('passwordCheck');
+            
+            if (password.length === 0) {
+                passwordError.textContent = '';
+                passwordSuccess.textContent = '';
+                passwordCheck.style.display = 'none';
+                this.parentElement.classList.remove('success');
+                return;
+            }
+            
+            if (password.length < 6) {
+                passwordError.textContent = 'Password must be at least 6 characters';
+                passwordSuccess.textContent = '';
+                passwordCheck.style.display = 'none';
+                this.parentElement.classList.remove('success');
+            } else {
+                passwordError.textContent = '';
+                passwordSuccess.textContent = 'Password accepted!';
+                passwordCheck.style.display = 'inline';
+                this.parentElement.classList.add('success');
+            }
+        });
+
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function(e) {
+            e.preventDefault();
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+                this.parentElement.classList.add('password-visible');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+                this.parentElement.classList.remove('password-visible');
+            }
+        });
+
+        // Focus effects
+        document.getElementById('email').addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        document.getElementById('email').addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+
+        document.getElementById('password').addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        document.getElementById('password').addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+
+        // Form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            
+            // Validation
+            if (!email || !password) {
+                Toast.error('Please fill in all fields');
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                Toast.error('Please enter a valid email');
+                return;
+            }
+            
+            if (password.length < 6) {
+                Toast.error('Password must be at least 6 characters');
+                return;
+            }
+            
+            // Show loading state
+            loginBtn.disabled = true;
+            loginBtn.classList.add('loading');
+            loginBtn.querySelector('.btn-text').textContent = 'Signing In...';
+            
+            // Simulate login delay
+            setTimeout(() => {
+                // Save login state
+                const remember = document.getElementById('remember').checked;
+                if (remember) {
+                    localStorage.setItem('rememberedEmail', email);
+                }
+                localStorage.setItem('lastLogin', new Date().toISOString());
+                
+                Toast.success(`Welcome back, ${email.split('@')[0]}! 🎉`);
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            }, 1000);
+        });
+
+        // Social login buttons
+        document.querySelectorAll('.social-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const provider = this.classList.contains('google') ? 'Google' : 'Facebook';
+                this.disabled = true;
+                this.classList.add('loading');
+                Toast.success(`Connecting with ${provider}...`);
+                
+                setTimeout(() => {
+                    this.disabled = false;
+                    this.classList.remove('loading');
+                }, 2000);
+            });
+        });
+
+        // Load remembered email
+        window.addEventListener('DOMContentLoaded', function() {
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                document.getElementById('email').value = rememberedEmail;
+                document.getElementById('remember').checked = true;
+                document.getElementById('email').parentElement.classList.add('success');
+                document.getElementById('emailSuccess').textContent = 'Email looks good!';
+            }
+            
+            updateCartCount();
+        });
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+    </script>
+</body>
+</html>
+
+

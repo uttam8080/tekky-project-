@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - FoodHub</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>FoodHub</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="restaurants.html">Restaurants</a></li>
+                    <li><a href="offers.html">Offers</a></li>
+                    <li><a href="help.html">Help</a></li>
+                </ul>
+                <div class="nav-icons">
+                    <a href="cart.html" class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sign Up Section -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-box">
+                <div class="auth-header">
+                    <h1>Join FoodHub!</h1>
+                    <p>Create an account to start ordering delicious food</p>
+                </div>
+
+                <form class="auth-form" id="signupForm">
+                    <div class="form-group">
+                        <label for="fullname">
+                            Full Name
+                            <span class="form-hint">How should we call you?</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="fullname" name="fullname" placeholder="John Doe" required>
+                            <span class="success-icon" id="nameCheck">✓</span>
+                        </div>
+                        <span class="error-message" id="nameError"></span>
+                        <span class="success-message" id="nameSuccess">Name looks great!</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-email">
+                            Email Address
+                            <span class="form-hint">We'll use this to log you in</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" id="signup-email" name="email" placeholder="your@email.com" required>
+                            <span class="success-icon" id="emailCheckSignup">✓</span>
+                        </div>
+                        <span class="error-message" id="emailError"></span>
+                        <span class="success-message" id="emailSuccessSignup">Email verified!</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">
+                            Phone Number
+                            <span class="form-hint">For delivery updates</span>
+                        </label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input type="tel" id="phone" name="phone" placeholder="+1 (555) 123-4567" required>
+                            <span class="success-icon" id="phoneCheck">✓</span>
+                        </div>
+                        <span class="error-message" id="phoneError"></span>
+                        <span class="success-message" id="phoneSuccess">Phone number valid!</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-password">
+                            Password
+                            <span class="form-hint">Min 8 characters recommended</span>
+                        </label>
+                        <div class="password-input">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="signup-password" name="password" placeholder="Create a strong password" required>
+                            <button type="button" class="toggle-password" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <span class="success-icon" id="passwordCheck">✓</span>
+                        </div>
+                        <div class="password-meter">
+                            <div class="meter-bar" id="meterBar"></div>
+                        </div>
+                        <span class="password-strength" id="passwordStrength"></span>
+                        <span class="error-message" id="passwordError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">
+                            Confirm Password
+                            <span class="form-hint">Must match above</span>
+                        </label>
+                        <div class="password-input">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="confirm-password" name="confirm" placeholder="Confirm your password" required>
+                            <button type="button" class="toggle-password" id="toggleConfirm">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <span class="success-icon" id="confirmCheck">✓</span>
+                        </div>
+                        <span class="error-message" id="confirmError"></span>
+                        <span class="success-message" id="confirmSuccess">Passwords match!</span>
+                    </div>
+
+                    <div class="form-group checkbox">
+                        <div class="checkbox-wrapper">
+                            <input type="checkbox" id="agree" name="agree" required>
+                            <label for="agree">
+                                <span class="checkbox-custom"></span>
+                                I agree to the <a href="#terms">Terms & Conditions</a> and <a href="#privacy">Privacy Policy</a>
+                            </label>
+                            <span class="success-icon" id="agreeCheck">✓</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="auth-btn" id="signupBtn">
+                        <span class="btn-text">Create Account</span>
+                        <i class="fas fa-check btn-icon"></i>
+                    </button>
+                </form>
+
+                <div class="auth-divider">
+                    <span>or</span>
+                </div>
+
+                <div class="social-login">
+                    <button type="button" class="social-btn google">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="social-btn facebook">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </button>
+                </div>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html">Sign In</a></p>
+                </div>
+            </div>
+
+            <!-- Decorative Pizza Illustration -->
+            <div class="auth-illustration">
+                <div class="pizza-illustration">
+                    <img src="images/pizzza.png" alt="Delicious Pizza" id="scrollImage" class="pizza-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/app.js"></script>
+    <script src="js/interactive.js"></script>
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword').addEventListener('click', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('signup-password');
+            const icon = this.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        document.getElementById('toggleConfirm').addEventListener('click', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('confirm-password');
+            const icon = this.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        // Password strength checker
+        document.getElementById('signup-password').addEventListener('input', function() {
+            const password = this.value;
+            const strength = document.getElementById('passwordStrength');
+            
+            let level = 0;
+            if (password.length >= 8) level++;
+            if (/[A-Z]/.test(password)) level++;
+            if (/[0-9]/.test(password)) level++;
+            if (/[^A-Za-z0-9]/.test(password)) level++;
+            
+            const messages = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+            const colors = ['', '#ff6b6b', '#ffa500', '#ffeb3b', '#4caf50'];
+            
+            if (password.length > 0) {
+                strength.textContent = messages[level];
+                strength.style.color = colors[level];
+            } else {
+                strength.textContent = '';
+            }
+        });
+
+        // ===== FULL NAME VALIDATION =====
+        document.getElementById('fullname').addEventListener('input', function(e) {
+            const name = this.value.trim();
+            const nameRegex = /^[a-zA-Z\s]{2,}$/;
+            const nameError = document.getElementById('nameError');
+            const nameSuccess = document.getElementById('nameSuccess');
+            const nameCheck = document.getElementById('nameCheck');
+            
+            if (name.length > 0) {
+                if (nameRegex.test(name)) {
+                    nameError.textContent = '';
+                    nameSuccess.style.display = 'block';
+                    nameCheck.style.display = 'inline';
+                    this.parentElement.classList.add('success');
+                } else {
+                    nameError.textContent = 'Please enter a valid name (letters only)';
+                    nameSuccess.style.display = 'none';
+                    nameCheck.style.display = 'none';
+                    this.parentElement.classList.remove('success');
+                }
+            } else {
+                nameError.textContent = '';
+                nameSuccess.style.display = 'none';
+                nameCheck.style.display = 'none';
+                this.parentElement.classList.remove('success');
+            }
+        });
+
+        document.getElementById('fullname').addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        document.getElementById('fullname').addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+
+        // ===== EMAIL VALIDATION =====
+        document.getElementById('signup-email').addEventListener('input', function(e) {
+            const email = this.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailError = document.getElementById('emailError');
+            const emailSuccess = document.getElementById('emailSuccessSignup');
+            const emailCheck = document.getElementById('emailCheckSignup');
+            
+            if (email.length > 0) {
+                if (emailRegex.test(email)) {
+                    emailError.textContent = '';
+                    emailSuccess.style.display = 'block';
+                    emailCheck.style.display = 'inline';
+                    this.parentElement.classList.add('success');
+                } else {
+                    emailError.textContent = 'Please enter a valid email address';
+                    emailSuccess.style.display = 'none';
+                    emailCheck.style.display = 'none';
+                    this.parentElement.classList.remove('success');
+                }
+            } else {
+                emailError.textContent = '';
+                emailSuccess.style.display = 'none';
+                emailCheck.style.display = 'none';
+                this.parentElement.classList.remove('success');
+            }
+        });
+
+        document.getElementById('signup-email').addEventListener('focus', function() {
+            this.parentElement.classList.add('focused');
+        });
+        
+        document.getElementById('signup-email').addEventListener('blur', function() {
+            this.parentElement.classList.remove('focused');
+        });
+
+        // ===== PHONE VALIDATION =====
+        document.getElementById('phone').addEventListener('input', function(e) {
+            const phone = this.value.replace(/\D/g, '');
+            const phoneError = document.getElementById('phoneError');
+            const phoneSuccess = document.getElementById('phoneSuccess');
+            const phoneCheck = document.getElementById('phoneCheck');
+            
+            if (phone.length > 0) {
+                if (phone.length >= 10) {
+                    phoneError.textContent = '';
+                    phoneSuccess.style.display = 'block';
+                    phoneCheck.style.display = 'inline';
+                    this.parentElement.classList.add('success');
+                } else {
+                    phoneError.textContent = 'Phone number must be at least 10 digits';
+                    phoneSuccess.style.display = 'none';
+                    phoneCheck.style.display = 'none';
+                    this.parentElement.classList.remove('success');
+                }
+            } else {
+                phoneError.textContent = '';
+                phoneSuccess.style.display = 'none';
+                phoneCheck.style.display = 'none';
+                this.parentElement.classList.remove('success');
+            }
+        });
+
+        document.getElementById('phone').addEventListener('focus', function() {
+            this.parentElement.parentElement.classList.add('focused');
+        });
+        
+        document.getElementById('phone').addEventListener('blur', function() {
+            this.parentElement.parentElement.classList.remove('focused');
+        });
+
+        // ===== PASSWORD VISIBILITY TOGGLE =====
+        document.getElementById('togglePassword').addEventListener('click', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('signup-password');
+            const icon = this.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+                this.parentElement.classList.add('password-visible');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+                this.parentElement.classList.remove('password-visible');
+            }
+        });
+
+        document.getElementById('toggleConfirm').addEventListener('click', function(e) {
+            e.preventDefault();
+            const input = document.getElementById('confirm-password');
+            const icon = this.querySelector('i');
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+                this.parentElement.classList.add('password-visible');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+                this.parentElement.classList.remove('password-visible');
+            }
+        });
+
+        // ===== PASSWORD STRENGTH METER =====
+        document.getElementById('signup-password').addEventListener('input', function() {
+            const password = this.value;
+            const strength = document.getElementById('passwordStrength');
+            const meterBar = document.getElementById('meterBar');
+            const passwordCheck = document.getElementById('passwordCheck');
+            
+            let level = 0;
+            if (password.length >= 8) level++;
+            if (/[A-Z]/.test(password)) level++;
+            if (/[0-9]/.test(password)) level++;
+            if (/[^A-Za-z0-9]/.test(password)) level++;
+            
+            const messages = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+            const colors = ['', '#ff6b6b', '#ffa500', '#ffeb3b', '#4caf50'];
+            const widths = ['0%', '25%', '50%', '75%', '100%'];
+            
+            if (password.length > 0) {
+                strength.textContent = messages[level];
+                strength.style.color = colors[level];
+                meterBar.style.width = widths[level];
+                meterBar.style.backgroundColor = colors[level];
+                
+                if (level >= 3) {
+                    passwordCheck.style.display = 'inline';
+                    this.parentElement.parentElement.classList.add('success');
+                } else {
+                    passwordCheck.style.display = 'none';
+                    this.parentElement.parentElement.classList.remove('success');
+                }
+            } else {
+                strength.textContent = '';
+                meterBar.style.width = '0%';
+                passwordCheck.style.display = 'none';
+                this.parentElement.parentElement.classList.remove('success');
+            }
+            
+            validateConfirmPassword();
+        });
+
+        document.getElementById('signup-password').addEventListener('focus', function() {
+            this.parentElement.parentElement.classList.add('focused');
+        });
+        
+        document.getElementById('signup-password').addEventListener('blur', function() {
+            this.parentElement.parentElement.classList.remove('focused');
+        });
+
+        // ===== CONFIRM PASSWORD VALIDATION =====
+        function validateConfirmPassword() {
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('confirm-password').value;
+            const confirmError = document.getElementById('confirmError');
+            const confirmSuccess = document.getElementById('confirmSuccess');
+            const confirmCheck = document.getElementById('confirmCheck');
+            
+            if (confirm.length > 0) {
+                if (password === confirm) {
+                    confirmError.textContent = '';
+                    confirmSuccess.style.display = 'block';
+                    confirmCheck.style.display = 'inline';
+                    document.getElementById('confirm-password').parentElement.parentElement.classList.add('success');
+                } else {
+                    confirmError.textContent = 'Passwords do not match';
+                    confirmSuccess.style.display = 'none';
+                    confirmCheck.style.display = 'none';
+                    document.getElementById('confirm-password').parentElement.parentElement.classList.remove('success');
+                }
+            } else {
+                confirmError.textContent = '';
+                confirmSuccess.style.display = 'none';
+                confirmCheck.style.display = 'none';
+                document.getElementById('confirm-password').parentElement.parentElement.classList.remove('success');
+            }
+        }
+
+        document.getElementById('confirm-password').addEventListener('input', validateConfirmPassword);
+
+        document.getElementById('confirm-password').addEventListener('focus', function() {
+            this.parentElement.parentElement.classList.add('focused');
+        });
+        
+        document.getElementById('confirm-password').addEventListener('blur', function() {
+            this.parentElement.parentElement.classList.remove('focused');
+        });
+
+        // ===== TERMS CHECKBOX ENHANCEMENT =====
+        document.getElementById('agree').addEventListener('change', function() {
+            const agreeCheck = document.getElementById('agreeCheck');
+            if (this.checked) {
+                agreeCheck.style.display = 'inline';
+                this.parentElement.classList.add('success');
+            } else {
+                agreeCheck.style.display = 'none';
+                this.parentElement.classList.remove('success');
+            }
+        });
+
+        // ===== FORM SUBMISSION =====
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fullname = document.getElementById('fullname').value.trim();
+            const email = document.getElementById('signup-email').value;
+            const phone = document.getElementById('phone').value.replace(/\D/g, '');
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('confirm-password').value;
+            const agree = document.getElementById('agree').checked;
+            
+            // Comprehensive validation
+            const nameRegex = /^[a-zA-Z\s]{2,}$/;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!fullname || !nameRegex.test(fullname)) {
+                Toast.error('Please enter a valid name');
+                return;
+            }
+            
+            if (!email || !emailRegex.test(email)) {
+                Toast.error('Please enter a valid email address');
+                return;
+            }
+            
+            if (!phone || phone.length < 10) {
+                Toast.error('Please enter a valid phone number');
+                return;
+            }
+            
+            if (!password || password.length < 8) {
+                Toast.error('Password must be at least 8 characters');
+                return;
+            }
+            
+            if (password !== confirm) {
+                Toast.error('Passwords do not match');
+                return;
+            }
+            
+            if (!agree) {
+                Toast.error('Please accept the Terms & Conditions');
+                return;
+            }
+            
+            // Show loading state
+            const signupBtn = document.getElementById('signupBtn');
+            signupBtn.disabled = true;
+            signupBtn.classList.add('loading');
+            signupBtn.querySelector('.btn-text').textContent = 'Creating Account...';
+            
+            // Simulate account creation (replace with actual API call)
+            setTimeout(() => {
+                const userData = {
+                    name: fullname,
+                    email: email,
+                    phone: phone,
+                    joinedDate: new Date().toISOString()
+                };
+                localStorage.setItem('user', JSON.stringify(userData));
+                localStorage.setItem('rememberedEmail', email);
+                
+                Toast.success(`Welcome, ${fullname}! Account created successfully! 🎉`);
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            }, 1500);
+        });
+
+        // ===== SOCIAL SIGNUP BUTTONS =====
+        document.querySelectorAll('.social-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const provider = this.classList.contains('google') ? 'Google' : 'Facebook';
+                this.disabled = true;
+                this.classList.add('loading');
+                
+                setTimeout(() => {
+                    Toast.success(`Signing up with ${provider}... 🔐`);
+                    this.disabled = false;
+                    this.classList.remove('loading');
+                }, 2000);
+            });
+        });
+
+        // ===== UPDATE CART COUNT =====
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+        }
+        updateCartCount();
+
+        // Parallax scroll effect for pizza image
+        document.addEventListener("DOMContentLoaded", function() {
+            const scrollImage = document.getElementById("scrollImage");
+            
+            if (scrollImage) {
+                function updatePizzaPosition() {
+                    const scrollY = window.scrollY || window.pageYOffset;
+                    scrollImage.style.transform = `translateY(${-scrollY * 0.5}px)`;
+                }
+                
+                // Listen for scroll events
+                window.addEventListener("scroll", updatePizzaPosition, { passive: true });
+                
+                // Call once on initial load
+                updatePizzaPosition();
+            }
+        });
+    </script>
+</body>
+</html>
