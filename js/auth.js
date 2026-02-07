@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         if (response.success) {
-          
+
           if (response.data.isExistingUser) {
             showNotification("Welcome back! Logging you in...", "success");
           } else {
@@ -130,27 +130,26 @@ async function updateAuthUI() {
   const navIcons = document.querySelector(".nav-icons");
   if (!navIcons) return;
 
+  // Clear ANY existing auth elements to prevent duplication
   const existingContainer = navIcons.querySelector(".profile-menu-container");
-  const existingLogin = navIcons.querySelector('a[href="login.html"]');
-  const existingSignup = navIcons.querySelector('a[href="signup.html"]');
+  if (existingContainer) existingContainer.remove();
+
+  // Remove existing login/signup buttons (looking for specific classes or hrefs)
+  const existingAuthBtns = navIcons.querySelectorAll('a[href*="login.html"], a[href*="signup.html"]');
+  existingAuthBtns.forEach(btn => btn.remove());
 
   if (isAuthenticated && user) {
-    if (existingLogin) existingLogin.remove();
-    if (existingSignup) existingSignup.remove();
-
-    if (!existingContainer) {
-      if (!document.getElementById("profile-styles")) {
-        const style = document.createElement("style");
-        style.id = "profile-styles";
-        style.innerHTML = `
-                    .profile-menu-container { position: relative; margin-left: 15px; }
+    if (!document.getElementById("profile-styles")) {
+      const style = document.createElement("style");
+      style.id = "profile-styles";
+      style.innerHTML = `
+                    .profile-menu-container { position: relative; margin-left: 15px; display: inline-block; }
                     .profile-avatar { 
                         width: 42px; height: 42px; border-radius: 50%; 
                         background: #000000; color: white; 
                         display: flex; align-items: center; justify-content: center; 
                         font-weight: 600; font-size: 16px; 
                         cursor: pointer; border: 2px solid white; 
-                        box-shadow: 0 2px 10px rgba(255, 82, 0, 0.2);
                         box-shadow: 0 2px 10px rgba(255, 82, 0, 0.2);
                     }
                     .profile-dropdown { 
@@ -190,25 +189,23 @@ async function updateAuthUI() {
                     .dropdown-footer { border-top: 1px solid #f0f0f0; padding: 8px; margin-top: 8px; }
                     .logout-item { color: #ef4444; }
                     .logout-item:hover { background: #FEF2F2; color: #dc2626; }
-                    
-                    
                     .edit-field { width: 100%; padding: 8px 12px; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 8px; font-size: 14px; }
                     .edit-field:focus { outline: none; border-color: #FF5200; }
                     .save-actions { display: flex; gap: 8px; margin-top: 10px; }
                     .save-btn-primary { flex: 1; background: #FF5200; color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; }
                     .cancel-btn { flex: 1; background: #f3f4f6; color: #374151; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; }
                 `;
-        document.head.appendChild(style);
-      }
+      document.head.appendChild(style);
+    }
 
-      const container = document.createElement("div");
-      container.className = "profile-menu-container";
+    const container = document.createElement("div");
+    container.className = "profile-menu-container";
 
-      const initials = (
-        user.firstName[0] + (user.lastName ? user.lastName[0] : "")
-      ).toUpperCase();
+    const initials = (
+      user.firstName[0] + (user.lastName ? user.lastName[0] : "")
+    ).toUpperCase();
 
-      container.innerHTML = `
+    container.innerHTML = `
                 <button class="profile-avatar" id="profileToggle">
                     ${initials}
                 </button>
@@ -245,202 +242,102 @@ async function updateAuthUI() {
                 </div>
             `;
 
-      navIcons.appendChild(container);
+    navIcons.appendChild(container);
 
-      const toggle = container.querySelector("#profileToggle");
-      const dropdown = container.querySelector("#profileDropdown");
-      const logout = container.querySelector("#logoutAction");
-      const editBtn = container.querySelector("#editProfileBtn");
-      const cancelBtn = container.querySelector("#cancelEditBtn");
-      const saveBtn = container.querySelector("#saveProfileBtn");
-      const listMode = container.querySelector("#dropdownListMode");
-      const editMode = container.querySelector("#dropdownEditMode");
+    const toggle = container.querySelector("#profileToggle");
+    const dropdown = container.querySelector("#profileDropdown");
+    const logout = container.querySelector("#logoutAction");
+    const editBtn = container.querySelector("#editProfileBtn");
+    const cancelBtn = container.querySelector("#cancelEditBtn");
+    const saveBtn = container.querySelector("#saveProfileBtn");
+    const listMode = container.querySelector("#dropdownListMode");
+    const editMode = container.querySelector("#dropdownEditMode");
 
-      toggle.addEventListener("click", (e) => {
-        e.stopPropagation();
-        dropdown.classList.toggle("active");
-      });
+    toggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle("active");
+    });
 
-      document.addEventListener("click", (e) => {
-        if (!container.contains(e.target)) {
-          dropdown.classList.remove("active");
+    document.addEventListener("click", (e) => {
+      if (!container.contains(e.target)) {
+        dropdown.classList.remove("active");
 
-          setTimeout(() => {
-            listMode.style.display = "block";
-            editMode.style.display = "none";
-          }, 200);
-        }
-      });
+        setTimeout(() => {
+          listMode.style.display = "block";
+          editMode.style.display = "none";
+        }, 200);
+      }
+    });
 
-      logout.addEventListener("click", () => {
-        api.logout();
-        window.location.href = "index.html";
-      });
+    logout.addEventListener("click", () => {
+      api.logout();
+      window.location.href = "index.html";
+    });
 
-      editBtn.addEventListener("click", () => {
-        listMode.style.display = "none";
-        editMode.style.display = "block";
-      });
+    editBtn.addEventListener("click", () => {
+      listMode.style.display = "none";
+      editMode.style.display = "block";
+    });
 
-      cancelBtn.addEventListener("click", () => {
-        editMode.style.display = "none";
-        listMode.style.display = "block";
-      });
+    cancelBtn.addEventListener("click", () => {
+      editMode.style.display = "none";
+      listMode.style.display = "block";
+    });
 
-      saveBtn.addEventListener("click", async () => {
-        const newFirst = document.getElementById("editFirstName").value;
-        const newLast = document.getElementById("editLastName").value;
+    saveBtn.addEventListener("click", async () => {
+      const newFirst = document.getElementById("editFirstName").value;
+      const newLast = document.getElementById("editLastName").value;
 
-        try {
-          saveBtn.textContent = "Saving...";
-          const response = await api.updateProfile({
-            firstName: newFirst,
-            lastName: newLast,
-          });
+      try {
+        saveBtn.textContent = "Saving...";
+        const response = await api.updateProfile({
+          firstName: newFirst,
+          lastName: newLast,
+        });
 
-          const updatedUser = {
-            ...user,
-            firstName: newFirst,
-            lastName: newLast,
-          };
-          api.setCurrentUser(updatedUser);
+        const updatedUser = {
+          ...user,
+          firstName: newFirst,
+          lastName: newLast,
+        };
+        api.setCurrentUser(updatedUser);
 
-          showNotification("Profile updated successfully!", "success");
+        showNotification("Profile updated successfully!", "success");
 
-          updateAuthUI();
-        } catch (error) {
-          console.error(error);
+        updateAuthUI();
+      } catch (error) {
+        console.error(error);
 
-          const updatedUser = {
-            ...user,
-            firstName: newFirst,
-            lastName: newLast,
-          };
-          api.setCurrentUser(updatedUser);
-          updateAuthUI();
+        const updatedUser = {
+          ...user,
+          firstName: newFirst,
+          lastName: newLast,
+        };
+        api.setCurrentUser(updatedUser);
+        updateAuthUI();
 
-          showNotification("Profile saved!", "success");
-        }
-      });
-    }
+        showNotification("Profile saved!", "success");
+      }
+    });
+
   } else {
-    if (existingContainer) existingContainer.remove();
+    // User is NOT logged in. 
+    // We already cleared duplicates, so just add the buttons fresh.
 
-    if (!existingLogin) {
-      const loginBtn = document.createElement("a");
-      loginBtn.href = "login.html";
-      loginBtn.className = "nav-link-btn";
-      loginBtn.textContent = "Sign In";
-      if (existingSignup) navIcons.insertBefore(loginBtn, existingSignup);
-      else navIcons.appendChild(loginBtn);
-    }
-    if (!existingSignup) {
-      const signupBtn = document.createElement("a");
-      signupBtn.href = "signup.html";
-      signupBtn.className = "nav-link-btn signup-btn";
-      signupBtn.textContent = "Sign Up";
-      navIcons.appendChild(signupBtn);
-    }
+    const loginBtn = document.createElement("a");
+    loginBtn.href = "login.html";
+    loginBtn.className = "nav-link-btn";
+    loginBtn.textContent = "Sign In";
+
+    const signupBtn = document.createElement("a");
+    signupBtn.href = "signup.html";
+    signupBtn.className = "nav-link-btn signup-btn";
+    signupBtn.textContent = "Sign Up";
+
+    navIcons.appendChild(loginBtn);
+    navIcons.appendChild(signupBtn);
   }
 }
-
-function showNotification(message, type = "info") {
-  const existingNotification = document.querySelector(".notification");
-  if (existingNotification) {
-    existingNotification.remove();
-  }
-
-  const notification = document.createElement("div");
-  notification.className = `notification notification-${type}`;
-  notification.innerHTML = `
-        <div class="notification-content">
-            <span class="notification-icon">
-                ${type === "success" ? "✓" : type === "error" ? "✕" : "ℹ"}
-            </span>
-            <span class="notification-message">${message}</span>
-        </div>
-    `;
-
-  notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        padding: 15px 20px;
-        background: ${type === "success" ? "#10b981" : type === "error" ? "#ef4444" : "#3b82f6"};
-        color: white;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 10000;
-        animation: slideIn 0.3s ease-out;
-        max-width: 400px;
-    `;
-
-  const style = document.createElement("style");
-  style.textContent = `
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        @keyframes slideOut {
-            from {
-                transform: translateX(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-        }
-        .notification-content {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .notification-icon {
-            font-size: 20px;
-            font-weight: bold;
-        }
-    `;
-  document.head.appendChild(style);
-
-  document.body.appendChild(notification);
-
-  setTimeout(() => {
-    notification.style.animation = "slideOut 0.3s ease-out";
-    setTimeout(() => {
-      notification.remove();
-    }, 300);
-  }, 5000);
-}
-
-function requireAuth() {
-  const protectedPages = [
-    "/cart.html",
-    "/checkout.html",
-    "/orders.html",
-    "/profile.html",
-  ];
-  const currentPage = window.location.pathname;
-
-  if (protectedPages.some((page) => currentPage.includes(page))) {
-    if (!api.isAuthenticated()) {
-      showNotification("Please login to access this page", "error");
-      setTimeout(() => {
-        window.location.href = "/login.html";
-      }, 2000);
-      return false;
-    }
-  }
-  return true;
-}
-
-requireAuth();
 
 function showNotification(message, type = "info") {
   const existingNotification = document.querySelector(".notification");
