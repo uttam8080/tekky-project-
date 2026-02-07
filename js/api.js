@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8000/api";
+const API_BASE_URL = "https://foodhub-backend-55f9.onrender.com/api";
 
 class API {
   constructor() {
@@ -53,7 +53,7 @@ class API {
       ...options,
       headers,
       mode: "cors",
-      cache: "default", 
+      cache: "default",
     };
 
     try {
@@ -279,14 +279,14 @@ class API {
     return this.get("/health");
   }
 
-  
+
   getLocalCart() {
     return JSON.parse(localStorage.getItem("cart")) || [];
   }
 
   saveLocalCart(cart) {
     localStorage.setItem("cart", JSON.stringify(cart));
-    
+
     window.dispatchEvent(new Event("cartUpdated"));
   }
 
