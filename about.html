@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="app-name" content="FoodHub">
+    <meta name="application-name" content="FoodHub">
+    <title>About Us - FoodHub | Food Delivery Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    
+    <nav class="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>FoodHub</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="restaurants.html">Restaurants</a></li>
+                <li><a href="instamart.html">InstaMarket</a></li>
+                <li><a href="offers.html">Offers</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+                <li><a href="help.html">Help</a></li>
+            </ul>
+            <div class="nav-right">
+                <div class="cart-icon" onclick="goToCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+                <div class="user-menu">
+                    <i class="fas fa-user"></i>
+                    <div class="dropdown-menu">
+                        <a href="login.html">Login</a>
+                        <a href="signup.html">Sign Up</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    
+    <section class="about-hero">
+        <div class="container">
+            <div class="about-hero-content">
+                <h1>About FoodHub</h1>
+                <p>Delivering delicious food to your doorstep with speed and quality</p>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>Our Story</h2>
+                    <p>FoodHub was founded in 2020 with a simple mission: to make food delivery fast, easy, and
+                        accessible to everyone. What started as a small local startup has grown into a leading food
+                        delivery platform serving thousands of customers across the country.</p>
+                    <p>We believe that everyone deserves access to their favorite restaurants and cuisines, delivered
+                        fresh and hot to their door. Our dedicated team works tirelessly to ensure every order is
+                        handled with care and precision.</p>
+                </div>
+                <div class="about-image">
+                    <img src="images/chef.png" alt="Our Team">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="mission-section">
+        <div class="container">
+            <h2>Our Mission & Vision</h2>
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3>Our Mission</h3>
+                    <p>To revolutionize food delivery by providing exceptional service, supporting local restaurants,
+                        and creating opportunities for our delivery partners.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-telescope"></i>
+                    </div>
+                    <h3>Our Vision</h3>
+                    <p>To become the world's most trusted and beloved food delivery platform, connecting millions of
+                        customers with their favorite restaurants.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Our Values</h3>
+                    <p>Integrity, Customer-First, Innovation, Sustainability, and Community - these core values guide
+                        every decision we make.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="why-choose-section">
+        <div class="container">
+            <h2>Why Choose FoodHub?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Lightning Fast Delivery</h3>
+                    <p>Average delivery time of 25-30 minutes. We prioritize speed without compromising quality.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>100% Safety Guaranteed</h3>
+                    <p>Strict hygiene standards and contactless delivery options for your peace of mind.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>2000+ Restaurants</h3>
+                    <p>Choose from thousands of restaurants offering diverse cuisines and meal options.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                    <h3>Exclusive Offers</h3>
+                    <p>Get amazing discounts, cashback, and rewards on every order you place.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>24/7 Customer Support</h3>
+                    <p>Our dedicated support team is always ready to help with any questions or concerns.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Easy to Use App</h3>
+                    <p>Intuitive interface makes ordering as simple as a few clicks. Download our mobile app today.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="team-section">
+        <div class="container">
+            <h2>Meet Our Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3>Rajesh Kumar</h3>
+                    <p class="member-role">Founder & CEO</p>
+                    <p class="member-bio">Visionary leader with 15+ years in the food industry, passionate about
+                        innovation and customer satisfaction.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3>Priya Sharma</h3>
+                    <p class="member-role">Head of Operations</p>
+                    <p class="member-bio">Expert in logistics and supply chain management, ensuring every delivery is
+                        efficient and reliable.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3>Arjun Patel</h3>
+                    <p class="member-role">CTO & Tech Lead</p>
+                    <p class="member-bio">Tech innovator driving our platform's development, with expertise in mobile
+                        and web technologies.</p>
+                </div>
+                <div class="team-member">
+                    <div class="member-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h3>Ananya Singh</h3>
+                    <p class="member-role">Head of Customer Experience</p>
+                    <p class="member-bio">Customer advocate ensuring every interaction with FoodHub exceeds
+                        expectations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h3>500K+</h3>
+                    <p>Happy Customers</p>
+                </div>
+                <div class="stat-card">
+                    <h3>2000+</h3>
+                    <p>Partner Restaurants</p>
+                </div>
+                <div class="stat-card">
+                    <h3>50K+</h3>
+                    <p>Delivery Partners</p>
+                </div>
+                <div class="stat-card">
+                    <h3>5M+</h3>
+                    <p>Orders Delivered</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="awards-section">
+        <div class="container">
+            <h2>Awards & Recognition</h2>
+            <div class="awards-grid">
+                <div class="award-item">
+                    <i class="fas fa-star"></i>
+                    <h3>Best Food Delivery App 2023</h3>
+                    <p>Tech Innovation Awards</p>
+                </div>
+                <div class="award-item">
+                    <i class="fas fa-trophy"></i>
+                    <h3>Customer Choice Award</h3>
+                    <p>Customer Satisfaction Survey</p>
+                </div>
+                <div class="award-item">
+                    <i class="fas fa-medal"></i>
+                    <h3>Fastest Delivery Service</h3>
+                    <p>Industry Excellence Awards</p>
+                </div>
+                <div class="award-item">
+                    <i class="fas fa-certificate"></i>
+                    <h3>Sustainable Business Award</h3>
+                    <p>Green Business Initiative</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Experience FoodHub?</h2>
+                <p>Join thousands of happy customers enjoying delicious food delivered fast and fresh.</p>
+                <div class="cta-buttons">
+                    <a href="restaurants.html" class="btn btn-primary">Order Now</a>
+                    <a href="help.html" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>FoodHub</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="help.html">Help & Support</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>For Users</h4>
+                    <ul>
+                        <li><a href="restaurants.html">Browse Restaurants</a></li>
+                        <li><a href="offers.html">Current Offers</a></li>
+                        <li><a href="#">Become a Partner</a></li>
+                        <li><a href="#">Deliver with Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <ul>
+                        <li><a href="tel:+919876543210">+91 98765 43210</a></li>
+                        <li><a href="mailto:support@foodhub.com">support@foodhub.com</a></li>
+                        <li>New Delhi, India</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 FoodHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+    <script src="js/interactive.js"></script>
+</body>
+
+</html>

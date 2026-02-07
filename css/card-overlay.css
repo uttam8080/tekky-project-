@@ -1,0 +1,111 @@
+
+.restaurant-image {
+    position: relative;
+    
+}
+
+.image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 60%, transparent 100%);
+    padding: 20px 15px 15px 25px;
+    
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    z-index: 2;
+}
+
+.restaurant-name {
+    margin: 0 0 8px 0 !important;
+    font-size: 1.3rem;
+    
+    font-weight: 700;
+    color: #fff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.5px;
+}
+
+.restaurant-meta-overlay {
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    
+    color: #eee;
+    margin-left: 2px;
+    
+}
+
+.restaurant-meta-overlay .rating {
+    background-color: #27ae60;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.restaurant-meta-overlay .rating i {
+    font-size: 0.7rem;
+}
+
+.restaurant-meta-overlay .dot {
+    margin: 0 6px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.restaurant-meta-overlay .delivery-time,
+.restaurant-meta-overlay .price {
+    font-weight: 500;
+}
+
+
+.restaurant-info {
+    padding: 12px 15px !important;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cuisine {
+    margin: 0 !important;
+    color: #666;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60%;
+}
+
+.free-delivery {
+    color: #27ae60;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(39, 174, 96, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.view-menu-btn {
+    width: 100%;
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.view-menu-btn i {
+    font-size: 0.8rem;
+}

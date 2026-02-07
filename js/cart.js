@@ -15,10 +15,10 @@ function displayCart() {
     cartList.style.display = 'flex';
     orderSummary.style.display = 'block';
 
-    // Get restaurant name
+    
     const restaurantName = cart[0].restaurantName;
 
-    // Display items
+    
     cartList.innerHTML = cart.map(item => `
         <div class="cart-item">
             <div class="cart-item-info">
@@ -43,15 +43,15 @@ function displayCart() {
     updateCartSummary();
 }
 
-// ============ CART ITEM MANAGEMENT ============
-// Remove specific item from cart
+
+
 function removeItemFromCart(itemId) {
     removeFromCart(itemId);
     displayCart();
 }
 
-// ============ PRICING & SUMMARY ============
-// Update order summary (subtotal, tax, delivery fee, total)
+
+
 function updateCartSummary() {
     const totals = calculateTotals();
     const deliveryFee = 50;
@@ -64,8 +64,8 @@ function updateCartSummary() {
     document.getElementById('cartTotal').textContent = formatPrice(newTotal);
 }
 
-// ============ PROMO CODES & DISCOUNTS ============
-// Apply promotional discount code to cart
+
+
 function applyPromoCode() {
     const promoInput = document.getElementById('promoCode');
     const code = promoInput.value.toUpperCase();
@@ -84,8 +84,8 @@ function applyPromoCode() {
     }
 }
 
-// ============ PAGE INITIALIZATION ============
-// Initialize cart page on load
+
+
 document.addEventListener('DOMContentLoaded', () => {
     displayCart();
 });

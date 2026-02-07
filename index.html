@@ -1,35 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="app-name" content="FoodHub">
     <meta name="application-name" content="FoodHub">
-    <meta name="description" content="FoodHub - Your trusted food delivery partner for fast, fresh, and delicious meals.">
+    <meta name="description"
+        content="FoodHub - Your trusted food delivery partner for fast, fresh, and delicious meals.">
     <title>FoodHub - Food Delivery</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/card-overlay.css?v=2">
+    <link rel="stylesheet" href="css/mega-menu.css">
+    <link rel="stylesheet" href="css/service-images.css">
+    <link rel="stylesheet" href="css/cities-section.css">
+    <link rel="stylesheet" href="css/restaurants-header.css">
+    <link rel="stylesheet" href="css/cart-sidebar.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
+
 <body>
-    <!-- Navbar -->
+
     <nav class="navbar">
         <div class="container">
             <div class="nav-content">
-                <div class="logo">
+                <a href="index.html" class="logo" style="cursor: pointer; z-index: 1001;"
+                    onclick="window.location.href='index.html'; return false;">
                     <i class="fas fa-utensils"></i>
                     <span>FoodHub</span>
-                </div>
+                </a>
                 <ul class="nav-menu">
                     <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="restaurants.html">Restaurants</a></li>
+
+
+                    <li class="nav-item">
+                        <a href="restaurants.html">Restaurants <i class="fas fa-chevron-down"
+                                style="font-size: 10px; margin-left: 4px;"></i></a>
+                        <div class="mega-menu">
+                            <div class="mega-column">
+                                <div class="mega-group-title">Popular Cuisines</div>
+                                <ul class="mega-list">
+                                    <li><a href="restaurants.html?cuisine=Italian">Italian Pizza & Pasta</a></li>
+                                    <li><a href="restaurants.html?cuisine=Indian">Authentic Indian</a></li>
+                                    <li><a href="restaurants.html?cuisine=Chinese">Chinese & Asian</a></li>
+                                    <li><a href="restaurants.html?cuisine=Mexican">Mexican Tacos</a></li>
+                                    <li><a href="restaurants.html?cuisine=Japanese">Japanese Sushi</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-column">
+                                <div class="mega-group-title">Quick Filters</div>
+                                <ul class="mega-list">
+                                    <li><a href="restaurants.html?sort=rating">Top Rated (4.5+)</a></li>
+                                    <li><a href="restaurants.html?sort=delivery-time">Fast Delivery (<30m)< /a>
+                                    </li>
+                                    <li><a href="restaurants.html?sort=price-low">Budget Friendly</a></li>
+                                    <li><a href="restaurants.html?cuisine=Dessert">Sweet Treats</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-column mega-featured">
+                                <img src="images/burger.jpg" alt="Special Offer">
+                                <h4>Special Deal</h4>
+                                <p>50% OFF on first order</p>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a href="instamart.html">InstaMarket <i class="fas fa-chevron-down"
+                                style="font-size: 10px; margin-left: 4px;"></i></a>
+                        <div class="mega-menu" style="width: 700px;">
+                            <div class="mega-column">
+                                <div class="mega-group-title">Daily Essentials</div>
+                                <ul class="mega-list">
+                                    <li><a href="instamart.html?category=Fruits & Veggies">Fruits & Vegetables</a></li>
+                                    <li><a href="instamart.html?category=Dairy & Bakery">Dairy, Bread & Eggs</a></li>
+                                    <li><a href="instamart.html?category=Beverages">Cold Drinks & Juices</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-column">
+                                <div class="mega-group-title">Household</div>
+                                <ul class="mega-list">
+                                    <li><a href="instamart.html?category=Snacks & Munchies">Snacks & Biscuits</a></li>
+                                    <li><a href="instamart.html?category=Personal Care">Personal Care</a></li>
+                                    <li><a href="instamart.html?category=Home Essentials">Cleaning & Home</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-column mega-featured"
+                                style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); color: white;">
+                                <img src="images/sweet_bakery_treats.png" alt="Bakery">
+                                <h4 style="color: white;">Fresh Bakery</h4>
+                                <p>Baked fresh daily!</p>
+                            </div>
+                        </div>
+                    </li>
+
                     <li><a href="offers.html">Offers</a></li>
                     <li><a href="help.html">Help</a></li>
                 </ul>
                 <div class="nav-icons">
-                    <a href="cart.html" class="cart-btn">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </a>
                     <a href="login.html" class="nav-link-btn">Sign In</a>
                     <a href="signup.html" class="nav-link-btn signup-btn">Sign Up</a>
                 </div>
@@ -37,9 +106,9 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+
     <section class="hero">
-        <!-- Floating Food Elements -->
+
         <div class="floating-food pizza">🍕</div>
         <div class="floating-food burger">🍔</div>
         <div class="floating-food fries">🍟</div>
@@ -50,18 +119,18 @@
         <div class="floating-food hotdog">🌭</div>
         <div class="floating-food chicken">🍗</div>
         <div class="floating-food sushi">🍣</div>
-        <!-- Middle Section Food Elements -->
+
         <div class="floating-food cake">🍰</div>
         <div class="floating-food ramen">🍜</div>
         <div class="floating-food biryani">🍲</div>
-        <!-- Around Chef Food Elements -->
+
         <div class="floating-food pizza-3">🍕</div>
         <div class="floating-food burger-3">🍔</div>
         <div class="floating-food ice-cream">🍦</div>
-        
+
         <div class="hero-content">
             <div class="hero-grid">
-                <!-- Left Side - Search & Text -->
+
                 <div class="hero-left">
                     <h1 class="hero-title">
                         <span class="title-word">Order</span>
@@ -70,21 +139,30 @@
                         <span class="title-word">Food</span>
                     </h1>
                     <p class="hero-subtitle">Fast delivery. Great quality. Amazing prices.</p>
-                    
+
                     <div class="search-container">
-                        <div class="search-box">
-                            <span class="location-icon"><i class="fas fa-map-marker-alt"></i></span>
-                            <input type="text" placeholder="Enter your delivery location">
-                            <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
+                        <div style="position: relative;">
+                            <div class="search-box">
+                                <span class="location-icon"><i class="fas fa-map-marker-alt"></i></span>
+                                <input type="text" id="locationInput" placeholder="Enter your delivery location"
+                                    autocomplete="off">
+                                <span class="dropdown-arrow"><i class="fas fa-chevron-down"></i></span>
+                            </div>
+
+                            <div id="locationSuggestions" class="location-suggestions"></div>
                         </div>
-                        <div class="search-box">
-                            <span class="search-icon"><i class="fas fa-search"></i></span>
-                            <input type="text" id="searchInput" placeholder="Search for restaurant, item or more">
+                        <div style="position: relative;">
+                            <div class="search-box">
+                                <span class="search-icon"><i class="fas fa-search"></i></span>
+                                <input type="text" id="searchInput" placeholder="Search for restaurant, item or more">
+                            </div>
+
+                            <div id="searchSuggestions" class="search-suggestions"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Side - Chef Image -->
+
                 <div class="hero-right">
                     <img src="images/chef.png" alt="Chef" class="chef-image">
                 </div>
@@ -92,7 +170,7 @@
         </div>
     </section>
 
-    <!-- Service Cards Section -->
+
     <section class="services">
         <div class="container">
             <div class="services-grid">
@@ -104,7 +182,7 @@
                         <a href="restaurants.html" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
                     </div>
                     <div class="service-image">
-                        <div class="food-image">🍽️</div>
+                        <img src="images/real_food_delivery.png" alt="Delicious Food" class="service-real-img">
                     </div>
                 </div>
 
@@ -113,39 +191,49 @@
                         <h2>InstaMarket</h2>
                         <p>Instant Grocery</p>
                         <span class="discount-badge">Upto 60% off</span>
-                        <a href="restaurants.html" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
+                        <a href="instamart.html" class="explore-btn">Explore <i class="fas fa-arrow-right"></i></a>
                     </div>
                     <div class="service-image">
-                        <div class="basket-image">🛒</div>
+                        <img src="images/instamart_banner.png" alt="Grocery Bag" class="service-real-img">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Top Categories Section -->
+
     <section class="top-categories">
         <div class="container">
             <div class="categories-header">
                 <h2>Popular in Your Area</h2>
             </div>
             <div class="categories-grid" id="categoriesContainer">
-                <!-- Categories will be populated here by JavaScript -->
+
             </div>
         </div>
     </section>
 
-    <!-- Restaurants Section -->
-    <section class="restaurants">
+
+    <section class="cities-section">
         <div class="container">
-            <h2>Restaurants You May Like</h2>
-            <div class="restaurants-grid" id="restaurantsGrid">
-                <!-- Restaurants will be populated here by JavaScript -->
+            <div class="cities-header">
+                <h2>Cities with food delivery</h2>
+            </div>
+            <div class="cities-grid" id="citiesContainer">
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button id="showMoreCitiesBtn" class="btn-outline"
+                    style="padding: 10px 25px; border-radius: 8px; cursor: pointer; background: transparent; border: 1px solid #ddd; color: #555; transition: all 0.3s;">
+                    Show More <i class="fas fa-chevron-down"></i>
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+
+    
+
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -182,10 +270,98 @@
         </div>
     </footer>
 
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            localStorage.removeItem('selectedLocation');
+            localStorage.removeItem('userLocation');
+
+
+            const locationInput = document.getElementById('locationInput');
+            const searchInput = document.getElementById('searchInput');
+
+            if (locationInput) {
+                locationInput.value = '';
+                locationInput.removeAttribute('value');
+            }
+
+            if (searchInput) {
+                searchInput.value = '';
+                searchInput.removeAttribute('value');
+            }
+
+            console.log('✅ Inputs cleared successfully');
+        });
+    </script>
+
+
+    <script src="js/locationAutocomplete.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const locationInput = document.getElementById('locationInput');
+            const locationSuggestions = document.getElementById('locationSuggestions');
+
+            if (locationInput && locationSuggestions) {
+                const locationAutocomplete = new LocationAutocomplete(locationInput, locationSuggestions, {
+                    countryCode: 'IN',
+                    minCharacters: 3,
+                    debounceDelay: 500,
+                    onLocationSelect: function (location) {
+                        console.log('Selected location:', location);
+
+                        localStorage.setItem('userLocation', JSON.stringify(location));
+
+                    }
+                });
+
+
+                locationInput.addEventListener('locationSelected', function (event) {
+                    const location = event.detail;
+                    console.log('Location selected via event:', location);
+                });
+            }
+
+
+            const searchInput = document.getElementById('searchInput');
+            const searchSuggestions = document.getElementById('searchSuggestions');
+
+            if (searchInput && searchSuggestions) {
+
+                const itemSearchAutocomplete = new ItemSearchAutocomplete(searchInput, searchSuggestions);
+
+
+                searchInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+
+                            window.location.href = `search-results.html?q=${encodeURIComponent(query)}`;
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+
+    <script src="js/itemSearchAutocomplete.js"></script>
+
+
+    <script src="js/api.js"></script>
+    <script src="js/cart-handler.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/restaurants.js"></script>
+    <script src="js/cart-sidebar.js"></script>
+    <script src="js/unified-search.js"></script>
+
+
     <script src="js/app.js"></script>
     <script src="js/interactive.js"></script>
     <script src="js/home-enhancements.js"></script>
 </body>
+
 </html>
-
-

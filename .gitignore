@@ -1,0 +1,28 @@
+# Dependencies
+node_modules/
+.DS_Store
+
+# Backend & Sensitive Info
+backend/
+.env
+backend/.env
+s3_policy.json
+table_status_*.txt
+
+# Build artifacts
+dist/
+build/
+
+# Temporary / Test Files
+frontend/
+test_*.js
+check_*.js
+*-test.html
+test-*
+raja.py
+cleanup_*.js
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

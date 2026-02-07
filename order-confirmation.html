@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -104,6 +105,7 @@
             from {
                 transform: scale(0);
             }
+
             to {
                 transform: scale(1);
             }
@@ -134,26 +136,24 @@
         }
     </style>
 </head>
+
 <body>
-    <!-- Navbar -->
+
     <nav class="navbar">
         <div class="container">
             <div class="nav-content">
-                <div class="logo">
+                <a href="index.html" class="logo">
                     <i class="fas fa-utensils"></i>
                     <span>FoodHub</span>
-                </div>
+                </a>
                 <ul class="nav-menu">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="restaurants.html">Restaurants</a></li>
+                    <li><a href="instamart.html">InstaMarket</a></li>
                     <li><a href="offers.html">Offers</a></li>
                     <li><a href="help.html">Help</a></li>
                 </ul>
                 <div class="nav-icons">
-                    <a href="cart.html" class="cart-btn">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </a>
                     <a href="login.html" class="nav-link-btn">Sign In</a>
                     <a href="signup.html" class="nav-link-btn signup-btn">Sign Up</a>
                 </div>
@@ -161,23 +161,23 @@
         </div>
     </nav>
 
-    <!-- Page Header -->
+
     <div class="page-header">
         <div class="container">
             <h1>Order Confirmation</h1>
         </div>
     </div>
 
-    <!-- Confirmation Section -->
+
     <section class="cart-section">
         <div class="container">
             <div class="confirmation-container" id="confirmationContainer">
-                <!-- Will be populated by JavaScript -->
+
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -214,136 +214,148 @@
         </div>
     </footer>
 
+    <script src="js/api.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/cart-handler.js"></script>
     <script src="js/interactive.js"></script>
     <script>
-        // Get order ID from URL
+
         const urlParams = new URLSearchParams(window.location.search);
         const orderId = urlParams.get('orderId');
 
-        // Display order confirmation
-        function displayOrderConfirmation() {
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
-            const order = orders.find(o => o.orderId === orderId);
 
-            if (!order) {
+        async function displayOrderConfirmation() {
+            if (!orderId) {
                 window.location.href = 'index.html';
                 return;
             }
 
             const container = document.getElementById('confirmationContainer');
-            const totals = order.totals;
-            const deliveryFee = 50;
-            const totalAmount = totals.subtotal + deliveryFee + totals.gst;
+            container.innerHTML = '<div class="loading-text">Loading order details...</div>';
 
-            container.innerHTML = `
-                <div class="success-icon">
-                    <i class="fas fa-check"></i>
-                </div>
-                <h1>Order Confirmed!</h1>
-                <p style="color: var(--text-light); margin-bottom: 20px;">Your order has been placed successfully</p>
-                
-                <div class="order-id">Order ID: ${order.orderId}</div>
+            try {
+                const response = await api.getOrder(orderId);
 
-                <div class="confirmation-details">
-                    <div class="detail-row">
-                        <span class="detail-label">Restaurant</span>
-                        <span class="detail-value">${order.restaurant}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Delivery Address</span>
-                        <span class="detail-value">${order.deliveryAddress.street}, ${order.deliveryAddress.city}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Phone</span>
-                        <span class="detail-value">${order.deliveryAddress.phone}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Payment Method</span>
-                        <span class="detail-value">${order.paymentMethod.toUpperCase()}</span>
-                    </div>
-                </div>
+                if (!response.success || !response.data) {
+                    throw new Error(response.message || 'Order not found');
+                }
 
-                <div class="order-items">
-                    <h3>Order Items</h3>
-                    ${order.items.map(item => `
-                        <div class="item-line">
-                            <span>${item.name} x${item.quantity}</span>
-                            <span>${formatPrice(item.price * item.quantity)}</span>
+                const order = response.data;
+                const getPrice = (p) => typeof formatPrice === 'function' ? formatPrice(p) : '₹' + p;
+
+                container.innerHTML = `
+                    <div class="success-icon">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <h1>Order Confirmed!</h1>
+                    <p style="color: var(--text-light); margin-bottom: 5px;">Your order has been placed successfully</p>
+                    <p style="color: var(--success-color); font-weight: bold; margin-bottom: 25px;">Estimated Arrival: ${order.estimatedDeliveryTime ? new Date(order.estimatedDeliveryTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '30-45 mins'}</p>
+                    
+                    <div class="order-id">Order Number: ${order.orderNumber || order.orderId}</div>
+
+                    <div class="confirmation-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Restaurant ID</span>
+                            <span class="detail-value">${order.restaurantId}</span>
                         </div>
-                    `).join('')}
-                </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Delivery Address</span>
+                            <span class="detail-value">${order.deliveryAddress}, ${order.deliveryCity}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Status</span>
+                            <span class="detail-value" style="color: var(--success-color);">${order.status.toUpperCase()}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Payment Method</span>
+                            <span class="detail-value">${(order.paymentMethod || 'online').toUpperCase()}</span>
+                        </div>
+                    </div>
 
-                <div class="confirmation-details">
-                    <div class="detail-row">
-                        <span class="detail-label">Subtotal</span>
-                        <span class="detail-value">${formatPrice(totals.subtotal)}</span>
+                    <div class="order-items">
+                        <h3>Order Items</h3>
+                        ${order.items.map(item => `
+                            <div class="item-line">
+                                <span>${item.menuItemName || 'Item'} x${item.quantity}</span>
+                                <span>${getPrice(item.itemTotal)}</span>
+                            </div>
+                        `).join('')}
                     </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Delivery Fee</span>
-                        <span class="detail-value">${formatPrice(deliveryFee)}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">GST (5%)</span>
-                        <span class="detail-value">${formatPrice(totals.gst)}</span>
-                    </div>
-                    <div class="detail-row" style="border-bottom: none; padding-top: 15px;">
-                        <span class="detail-label" style="font-size: 16px;">Total Amount</span>
-                        <span class="detail-value" style="font-size: 16px; color: var(--primary-color);">${formatPrice(totalAmount)}</span>
-                    </div>
-                </div>
 
-                <div class="estimated-time">
-                    <i class="fas fa-clock"></i>
-                    <p>Estimated Delivery</p>
-                    <p style="font-size: 16px; color: var(--success-color);">${order.estimatedDelivery}</p>
-                </div>
+                    <div class="confirmation-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Subtotal</span>
+                            <span class="detail-value">${getPrice(order.subtotal)}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Delivery Fee</span>
+                            <span class="detail-value">${getPrice(order.deliveryFee)}</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">GST (5%)</span>
+                            <span class="detail-value">${getPrice(order.tax)}</span>
+                        </div>
+                        <div class="detail-row" style="border-bottom: none; padding-top: 15px;">
+                            <span class="detail-label" style="font-size: 16px;">Total Amount</span>
+                            <span class="detail-value" style="font-size: 16px; color: var(--primary-color);">${getPrice(order.total)}</span>
+                        </div>
+                    </div>
 
-                <div class="confirmation-buttons">
-                    <a href="index.html" class="btn btn-primary btn-width">Continue Shopping</a>
-                    <a href="#" onclick="downloadReceipt()" class="btn btn-secondary btn-width">Download Receipt</a>
-                </div>
-            `;
-            
-            // Show toast notification
-            toast.success('Order placed successfully! 🎉', 4000);
+                    <div class="confirmation-buttons">
+                        <a href="index.html" class="btn btn-primary btn-width">Continue Shopping</a>
+                        <button onclick="downloadReceipt()" class="btn btn-secondary btn-width">Download Receipt</button>
+                    </div>
+                `;
+
+                // Save to window for receipt download
+                window.currentOrder = order;
+
+            } catch (error) {
+                console.error('Error loading order:', error);
+                container.innerHTML = `
+                    <div class="error-view">
+                        <i class="fas fa-exclamation-circle" style="font-size: 48px; color: #e74c3c; margin-bottom: 20px;"></i>
+                        <h2>Order Not Found</h2>
+                        <p>${error.message}</p>
+                        <a href="index.html" class="btn btn-primary" style="margin-top: 20px; display: inline-block;">Return Home</a>
+                    </div>
+                `;
+            }
         }
 
-        // Download receipt function
-        function downloadReceipt() {
-            const orders = JSON.parse(localStorage.getItem('orders')) || [];
-            const order = orders.find(o => o.orderId === orderId);
 
+        function downloadReceipt() {
+            const order = window.currentOrder;
             if (!order) return;
+
+            const getPrice = (p) => typeof formatPrice === 'function' ? formatPrice(p) : '₹' + p;
 
             let receipt = `FoodHub Order Receipt\n`;
             receipt += `=====================================\n\n`;
-            receipt += `Order ID: ${order.orderId}\n`;
-            receipt += `Date: ${order.orderDate}\n`;
-            receipt += `Restaurant: ${order.restaurant}\n\n`;
+            receipt += `Order Number: ${order.orderNumber || order.orderId}\n`;
+            receipt += `Date: ${new Date(order.orderDate).toLocaleString()}\n`;
+            receipt += `Restaurant ID: ${order.restaurantId}\n\n`;
 
             receipt += `ITEMS:\n`;
             order.items.forEach(item => {
-                receipt += `${item.name} x${item.quantity} - ${formatPrice(item.price * item.quantity)}\n`;
+                receipt += `${item.menuItemName} x${item.quantity} - ${getPrice(item.itemTotal)}\n`;
             });
 
             receipt += `\nDELIVERY ADDRESS:\n`;
-            receipt += `${order.deliveryAddress.name}\n`;
-            receipt += `${order.deliveryAddress.street}\n`;
-            receipt += `${order.deliveryAddress.city} - ${order.deliveryAddress.postal}\n`;
-            receipt += `Phone: ${order.deliveryAddress.phone}\n\n`;
-
-            const deliveryFee = 50;
-            const totalAmount = order.totals.subtotal + deliveryFee + order.totals.gst;
+            receipt += `${order.userName || 'Customer'}\n`;
+            receipt += `${order.deliveryAddress}\n`;
+            receipt += `${order.deliveryCity} - ${order.deliveryZipCode}\n`;
+            receipt += `Phone: ${order.customerPhone || 'N/A'}\n\n`;
 
             receipt += `AMOUNT SUMMARY:\n`;
-            receipt += `Subtotal: ${formatPrice(order.totals.subtotal)}\n`;
-            receipt += `Delivery Fee: ${formatPrice(deliveryFee)}\n`;
-            receipt += `GST (5%): ${formatPrice(order.totals.gst)}\n`;
-            receipt += `Total: ${formatPrice(totalAmount)}\n\n`;
+            receipt += `Subtotal: ${getPrice(order.subtotal)}\n`;
+            receipt += `Delivery Fee: ${getPrice(order.deliveryFee)}\n`;
+            receipt += `GST (5%): ${getPrice(order.tax)}\n`;
+            receipt += `Total: ${getPrice(order.total)}\n\n`;
 
-            receipt += `Payment Method: ${order.paymentMethod.toUpperCase()}\n`;
-            receipt += `Estimated Delivery: ${order.estimatedDelivery}\n\n`;
+            receipt += `Payment Method: ${(order.paymentMethod || 'online').toUpperCase()}\n`;
+            receipt += `Status: ${order.status.toUpperCase()}\n\n`;
             receipt += `Thank you for your order!\n`;
 
             const element = document.createElement('a');
@@ -357,8 +369,9 @@
             toast.success('Receipt downloaded! 📄', 2000);
         }
 
-        // Initialize
+
         document.addEventListener('DOMContentLoaded', displayOrderConfirmation);
     </script>
 </body>
+
 </html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="app-name" content="FoodHub">
+    <meta name="application-name" content="FoodHub">
+    <title>FoodHub - InstaMarket</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/card-overlay.css?v=2">
+    <link rel="stylesheet" href="css/mega-menu.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>FoodHub</span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+
+
+                    <li class="nav-item">
+                        <a href="restaurants.html">Restaurants <i class="fas fa-chevron-down"
+                                style="font-size: 10px; margin-left: 4px;"></i></a>
+                        <div class="mega-menu">
+                            <div class="mega-column">
+                                <div class="mega-group-title">Popular Cuisines</div>
+                                <ul class="mega-list">
+                                    <li><a href="restaurants.html?cuisine=Italian">Italian Pizza & Pasta</a></li>
+                                    <li><a href="restaurants.html?cuisine=Indian">Authentic Indian</a></li>
+                                    <li><a href="restaurants.html?cuisine=Chinese">Chinese & Asian</a></li>
+                                    <li><a href="restaurants.html?cuisine=Mexican">Mexican Tacos</a></li>
+                                    <li><a href="restaurants.html?cuisine=Japanese">Japanese Sushi</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-column">
+                                <div class="mega-group-title">Quick Filters</div>
+                                <ul class="mega-list">
+                                    <li><a href="restaurants.html?sort=rating">Top Rated (4.5+)</a></li>
+                                    <li><a href="restaurants.html?sort=delivery-time">Fast Delivery (<30m)< /a>
+                                    </li>
+                                    <li><a href="restaurants.html?sort=price-low">Budget Friendly</a></li>
+                                    <li><a href="restaurants.html?cuisine=Dessert">Sweet Treats</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-column mega-featured">
+                                <img src="images/burger.jpg" alt="Special Offer">
+                                <h4>Special Deal</h4>
+                                <p>50% OFF on first order</p>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a href="instamart.html" class="active">InstaMarket <i class="fas fa-chevron-down"
+                                style="font-size: 10px; margin-left: 4px;"></i></a>
+                        <div class="mega-menu" style="width: 700px;">
+                            <div class="mega-column">
+                                <div class="mega-group-title">Daily Essentials</div>
+                                <ul class="mega-list">
+                                    <li><a href="instamart.html?category=Fruits & Veggies">Fruits & Vegetables</a></li>
+                                    <li><a href="instamart.html?category=Dairy & Bakery">Dairy, Bread & Eggs</a></li>
+                                    <li><a href="instamart.html?category=Beverages">Cold Drinks & Juices</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-column">
+                                <div class="mega-group-title">Household</div>
+                                <ul class="mega-list">
+                                    <li><a href="instamart.html?category=Snacks & Munchies">Snacks & Biscuits</a></li>
+                                    <li><a href="instamart.html?category=Personal Care">Personal Care</a></li>
+                                    <li><a href="instamart.html?category=Home Essentials">Cleaning & Home</a></li>
+                                </ul>
+                            </div>
+                            <div class="mega-column mega-featured"
+                                style="background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); color: white;">
+                                <img src="images/sweet_bakery_treats.png" alt="Bakery">
+                                <h4 style="color: white;">Fresh Bakery</h4>
+                                <p>Baked fresh daily!</p>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li><a href="offers.html">Offers</a></li>
+                    <li><a href="help.html">Help</a></li>
+                </ul>
+                <div class="nav-icons">
+                    <a href="login.html" class="nav-link-btn">Sign In</a>
+                    <a href="signup.html" class="nav-link-btn signup-btn">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="page-header"
+        style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/instamart_banner.png'); background-size: cover; background-position: center; padding: 100px 0;">
+        <div class="container">
+            <h1 style="font-size: 3rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">InstaMarket</h1>
+            <p style="font-size: 1.2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Groceries, fresh produces &
+                essentials delivered in minutes</p>
+        </div>
+    </div>
+
+
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters">
+                <div class="filter-group">
+                    <label>Sort By:</label>
+                    <select id="sortFilter" onchange="applyFilters()">
+                        <option value="rating">Top Rating</option>
+                        <option value="delivery-time">Fast Delivery</option>
+                        <option value="distance">Nearest</option>
+                        <option value="price-low">Price Low to High</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Category:</label>
+                    <select id="categoryFilter" onchange="applyFilters()">
+                        <option value="">All Categories</option>
+                        <option value="Fruits & Veggies">Fruits & Veggies</option>
+                        <option value="Dairy & Bakery">Dairy & Bakery</option>
+                        <option value="Snacks & Munchies">Snacks & Munchies</option>
+                        <option value="Beverages">Beverages</option>
+                        <option value="Personal Care">Personal Care</option>
+                        <option value="Home Essentials">Home Essentials</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Rating:</label>
+                    <select id="ratingFilter" onchange="applyFilters()">
+                        <option value="">All Ratings</option>
+                        <option value="4.5">4.5+</option>
+                        <option value="4.0">4.0+</option>
+                        <option value="3.5">3.5+</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="restaurants">
+        <div class="container">
+            <h2 class="section-title">Essential Stores</h2>
+            <div class="restaurants-grid" id="storesGrid">
+
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About FoodHub</h4>
+                    <p>Your trusted food delivery partner for fast, fresh, and delicious meals.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Terms & Conditions</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>Email: support@foodhub.com</p>
+                    <p>Phone: +91-9876543210</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 FoodHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/cart-handler.js"></script>
+    <script src="js/cart-sidebar.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/instamart.js?v=8"></script>
+    <script src="js/interactive.js"></script>
+</body>
+
+</html>

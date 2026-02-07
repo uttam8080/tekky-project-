@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="app-name" content="FoodHub">
+    <meta name="application-name" content="FoodHub">
+    <title>FoodHub - My Profile</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/mega-menu.css">
+    <link rel="stylesheet" href="css/cart-sidebar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .profile-container {
+            display: flex;
+            gap: 30px;
+            padding: 50px 0;
+            min-height: 80vh;
+        }
+
+
+        .profile-sidebar {
+            width: 280px;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+
+        .user-info-summary {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            margin: 0 auto 15px;
+        }
+
+        .user-name {
+            font-weight: bold;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .user-email {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #555;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .sidebar-link:hover,
+        .sidebar-link.active {
+            background: #f5f7fa;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .sidebar-link i {
+            width: 25px;
+            margin-right: 10px;
+        }
+
+
+        .profile-content {
+            flex: 1;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
+
+        .orders-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .order-card {
+            border: 1px solid #eee;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+
+        .order-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .order-header {
+            background: #f9f9f9;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-id {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .order-date {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .order-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-delivered {
+            background: #e6fffa;
+            color: #2c7a7b;
+        }
+
+        .status-pending {
+            background: #fffaf0;
+            color: #dd6b20;
+        }
+
+        .status-preparing {
+            background: #ebf8ff;
+            color: #3182ce;
+        }
+
+        .status-cancelled {
+            background: #fff5f5;
+            color: #c53030;
+        }
+
+        .order-body {
+            padding: 20px;
+        }
+
+        .order-restaurant {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .restaurant-name {
+            font-weight: bold;
+            font-size: 16px;
+            color: #2d3748;
+        }
+
+        .order-total {
+            font-weight: bold;
+            color: #e53e3e;
+        }
+
+        .order-items {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .order-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+
+        .btn-outline {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            background: white;
+            color: #555;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .btn-primary-sm {
+            padding: 8px 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 0;
+            color: #888;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #cbd5e0;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                flex-direction: column;
+            }
+
+            .profile-sidebar {
+                width: 100%;
+            }
+        }
+
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-container {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>FoodHub</span>
+                </a>
+
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="restaurants.html">Restaurants</a></li>
+                    <li><a href="instamart.html">InstaMarket</a></li>
+                    <li><a href="offers.html">Offers</a></li>
+                    <li><a href="help.html">Help</a></li>
+                </ul>
+                <div class="nav-icons">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="page-header"
+        style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('images/cleany_and_tidy.png') no-repeat center center/cover;">
+        <div class="container">
+            <h1>My Account</h1>
+            <p>Manage your orders and profile</p>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <div class="profile-container">
+
+
+            <div class="profile-sidebar">
+                <div class="user-info-summary" id="userInfoSummary">
+                    <div class="user-avatar" id="userAvatar">User</div>
+                    <div class="user-name" id="userNameLabel">Guest User</div>
+                    <div class="user-email" id="userEmailLabel">Please sign in</div>
+                </div>
+                <ul class="sidebar-menu">
+                    <li>
+                        <div class="sidebar-link active" onclick="switchTab('orders', this)"><i
+                                class="fas fa-shopping-bag"></i> My Orders</div>
+                    </li>
+                    <li>
+                        <div class="sidebar-link" onclick="switchTab('addresses', this)"><i
+                                class="fas fa-map-marker-alt"></i> Saved Addresses</div>
+                    </li>
+                    <li>
+                        <div class="sidebar-link" onclick="switchTab('profile', this)"><i class="fas fa-user"></i>
+                            Profile Details</div>
+                    </li>
+                    <li>
+                        <div class="sidebar-link" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</div>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="profile-content">
+
+
+                <div id="orders" class="content-section active">
+                    <div class="section-header">
+                        <h2 class="section-title">Past Orders</h2>
+                        <button class="btn-outline" onclick="fetchOrders()"><i class="fas fa-sync-alt"></i>
+                            Refresh</button>
+                    </div>
+                    <div id="ordersList" class="orders-list">
+
+                        <div class="empty-state">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <p>Loading orders...</p>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="addresses" class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">My Addresses</h2>
+                        <button class="btn-primary-sm">Add New Address</button>
+                    </div>
+                    <div class="empty-state">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <p>No saved addresses yet.</p>
+                    </div>
+                </div>
+
+
+                <div id="profile" class="content-section">
+                    <div class="section-header">
+                        <h2 class="section-title">Profile Information</h2>
+                        <button class="btn-primary-sm" onclick="openEditModal()">Edit Profile</button>
+                    </div>
+                    <div style="color: #666;">
+                        <p><strong>Name:</strong> <span id="profileName">--</span></p>
+                        <p><strong>Email:</strong> <span id="profileEmail">--</span></p>
+                        <p><strong>Phone:</strong> <span id="profilePhone">--</span></p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2026 FoodHub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 class="modal-title">Edit Profile</h3>
+                <button class="close-modal" onclick="closeEditModal()">&times;</button>
+            </div>
+            <form id="editProfileForm" onsubmit="handleUpdateProfile(event)">
+                <div class="form-group">
+                    <label class="form-label">First Name</label>
+                    <input type="text" id="editFirstName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" id="editLastName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number</label>
+                    <input type="tel" id="editPhone" class="form-input" placeholder="e.g. +91 9876543210">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-primary-sm" style="width: 100%; padding: 12px;">Save
+                        Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/cart-handler.js"></script>
+    <script src="js/cart-sidebar.js"></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const user = await api.getCurrentUser();
+
+            if (!api.isAuthenticated() || !user) {
+                window.location.href = 'login.html?redirect=profile.html';
+                return;
+            }
+
+            // Update UI with user info
+            document.getElementById('userNameLabel').textContent = `${user.firstName} ${user.lastName}`;
+            document.getElementById('userEmailLabel').textContent = user.email;
+            document.getElementById('userAvatar').textContent = user.firstName.charAt(0).toUpperCase();
+
+            document.getElementById('profileName').textContent = `${user.firstName} ${user.lastName}`;
+            document.getElementById('profileEmail').textContent = user.email;
+            document.getElementById('profilePhone').textContent = user.phone || 'Not added';
+
+            // Initial fetch
+            fetchOrders();
+        });
+
+
+        function switchTab(tabId, element) {
+
+            document.querySelectorAll('.sidebar-link').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+
+
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+
+        async function fetchOrders() {
+            const ordersList = document.getElementById('ordersList');
+
+            try {
+                const data = await api.getOrders();
+                const orders = data.data || [];
+
+                if (orders.length === 0) {
+                    ordersList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-utensils"></i>
+                            <p>You haven't placed any orders yet.</p>
+                            <a href="restaurants.html" class="btn-primary-sm" style="text-decoration:none; margin-top:10px; display:inline-block;">Order Now</a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                ordersList.innerHTML = orders.map(order => {
+                    const statusClass = `status-${order.status.toLowerCase()}`;
+                    const date = new Date(order.createdAt || order.orderDate).toLocaleDateString(undefined, {
+                        year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                    });
+
+
+                    const itemsText = order.items.map(item => `${item.quantity}x ${item.menuItemName}`).join(', ');
+
+                    return `
+                        <div class="order-card">
+                            <div class="order-header">
+                                <div>
+                                    <div class="order-id">Order #${order.orderNumber || order.orderId.substring(0, 8)}</div>
+                                    <div class="order-date">${date}</div>
+                                </div>
+                                <div class="order-status ${statusClass}">${order.status}</div>
+                            </div>
+                            <div class="order-body">
+                                <div class="order-restaurant">
+                                    <span class="restaurant-name">Restaurant Order</span>
+                                    <span class="order-total">₹${order.total}</span>
+                                </div>
+                                <div class="order-items">
+                                    ${itemsText}
+                                </div>
+                            </div>
+                            <div class="order-footer">
+                                <button class="btn-outline">View Details</button>
+                                <button class="btn-primary-sm">Reorder</button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                ordersList.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-circle text-danger"></i>
+                        <p>Failed to load orders.</p>
+                        <button class="btn-outline" onclick="fetchOrders()">Try Again</button>
+                    </div>
+                `;
+            }
+        }
+
+        function logout() {
+            api.logout();
+        }
+
+
+
+        const modal = document.getElementById('editProfileModal');
+
+        function openEditModal() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                document.getElementById('editFirstName').value = user.firstName || '';
+                document.getElementById('editLastName').value = user.lastName || '';
+                document.getElementById('editPhone').value = user.phone || '';
+            }
+            modal.classList.add('active');
+        }
+
+        function closeEditModal() {
+            modal.classList.remove('active');
+        }
+
+
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                closeEditModal();
+            }
+        }
+
+        async function handleUpdateProfile(event) {
+            event.preventDefault();
+
+
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            const originalText = submitBtn.textContent;
+
+
+            submitBtn.textContent = 'Saving...';
+            submitBtn.disabled = true;
+
+            const firstName = document.getElementById('editFirstName').value;
+            const lastName = document.getElementById('editLastName').value;
+            const phone = document.getElementById('editPhone').value;
+            const token = localStorage.getItem('authToken');
+
+            try {
+                const response = await api.updateProfile({ firstName, lastName, phone });
+
+                if (response.success) {
+                    // Update current user in local storage
+                    const updatedUser = response.data.user;
+                    api.setCurrentUser(updatedUser);
+
+                    // Update UI
+                    document.getElementById('userNameLabel').textContent = `${updatedUser.firstName} ${updatedUser.lastName}`;
+                    document.getElementById('userAvatar').textContent = updatedUser.firstName.charAt(0).toUpperCase();
+                    document.getElementById('profileName').textContent = `${updatedUser.firstName} ${updatedUser.lastName}`;
+                    document.getElementById('profilePhone').textContent = updatedUser.phone || 'Not added';
+
+
+                    alert('Profile updated successfully!');
+                    closeEditModal();
+                } else {
+                    alert(data.error || 'Failed to update profile');
+                }
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                alert('Something went wrong. Please try again.');
+            } finally {
+
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+    </script>
+</body>
+
+</html>

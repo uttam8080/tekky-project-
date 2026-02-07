@@ -1,0 +1,14 @@
+
+.service-real-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    mask-image: linear-gradient(to right, transparent 0%, black 20%);
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%);
+}
+
+.service-image {
+    padding: 0 !important;
+    
+}

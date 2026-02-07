@@ -58,8 +58,8 @@ class Toast {
 
 const toast = new Toast();
 
-// ============ MODAL/DIALOG SYSTEM ============
-// Modal dialog class for displaying important information
+
+
 class Modal {
     constructor(title, content, actions = []) {
         this.modal = document.createElement('div');
@@ -129,8 +129,8 @@ class Modal {
     }
 }
 
-// ============ LOADING SPINNER ============
-// Loading spinner class for showing busy state
+
+
 class LoadingSpinner {
     constructor(targetElement = null) {
         this.targetElement = targetElement || document.body;
@@ -151,9 +151,9 @@ class LoadingSpinner {
     }
 }
 
-// ============ INTERACTIVE ENHANCEMENTS ============
 
-// Add ripple effect to buttons
+
+
 function addRippleEffect() {
     const buttons = document.querySelectorAll('.btn, button');
     
@@ -180,7 +180,7 @@ function addRippleEffect() {
     });
 }
 
-// Smooth scroll navigation
+
 function setupSmoothScroll() {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
@@ -196,7 +196,7 @@ function setupSmoothScroll() {
     });
 }
 
-// Animate elements on scroll
+
 function setupScrollAnimations() {
     const observerOptions = {
         threshold: 0.1,
@@ -217,7 +217,7 @@ function setupScrollAnimations() {
     });
 }
 
-// Interactive search with feedback
+
 function setupInteractiveSearch() {
     const searchInputs = document.querySelectorAll('input[type="text"]');
     
@@ -240,7 +240,7 @@ function setupInteractiveSearch() {
     });
 }
 
-// Confirm action with modal
+
 function confirmAction(title, message, onConfirm, onCancel = null) {
     const modal = new Modal(title, message, [
         {
@@ -259,7 +259,7 @@ function confirmAction(title, message, onConfirm, onCancel = null) {
     modal.open();
 }
 
-// Show alert
+
 function showAlert(title, message) {
     const modal = new Modal(title, message, [
         {
@@ -271,19 +271,19 @@ function showAlert(title, message) {
     modal.open();
 }
 
-// Shake element on error
+
 function shakeElement(element) {
     element.classList.add('error-shake');
     setTimeout(() => element.classList.remove('error-shake'), 400);
 }
 
-// Pulse element on success
+
 function pulseElement(element) {
     element.classList.add('success-check');
     setTimeout(() => element.classList.remove('success-check'), 600);
 }
 
-// Add counter animation to numbers
+
 function animateCounter(element, endValue, duration = 1000) {
     const startValue = 0;
     const startTime = Date.now();
@@ -302,7 +302,7 @@ function animateCounter(element, endValue, duration = 1000) {
     updateValue();
 }
 
-// Add slide-in animation when loading page
+
 function animatePageLoad() {
     const elements = document.querySelectorAll('.hero, .page-header, .restaurants-section');
     elements.forEach((el, index) => {
@@ -316,7 +316,7 @@ function animatePageLoad() {
     });
 }
 
-// Initialize all interactive features
+
 function initializeInteractiveUI() {
     addRippleEffect();
     setupSmoothScroll();
@@ -324,14 +324,14 @@ function initializeInteractiveUI() {
     setupInteractiveSearch();
     animatePageLoad();
     
-    // Setup click feedback for cart buttons
+    
     setupCartInteractions();
     
-    // Setup quantity button interactions
+    
     setupQuantityInteractions();
 }
 
-// Cart interactions
+
 function setupCartInteractions() {
     const addToCartButtons = document.querySelectorAll('[onclick*="addToCart"], [onclick*="addItemToCart"]');
     
@@ -351,7 +351,7 @@ function setupCartInteractions() {
     });
 }
 
-// Quantity button interactions
+
 function setupQuantityInteractions() {
     const quantityBtns = document.querySelectorAll('.quantity-btn');
     
@@ -373,10 +373,10 @@ function setupQuantityInteractions() {
     });
 }
 
-// Keyboard shortcuts
+
 function setupKeyboardShortcuts() {
     document.addEventListener('keydown', (e) => {
-        // ESC key closes modals
+        
         if (e.key === 'Escape') {
             const modal = document.querySelector('.modal.active');
             if (modal) {
@@ -384,7 +384,7 @@ function setupKeyboardShortcuts() {
             }
         }
 
-        // CTRL+K or CMD+K opens search
+        
         if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
             e.preventDefault();
             const searchInput = document.getElementById('searchInput');
@@ -396,7 +396,7 @@ function setupKeyboardShortcuts() {
     });
 }
 
-// Performance monitoring with visual feedback
+
 function setupPerformanceMonitoring() {
     if ('PerformanceObserver' in window) {
         const observer = new PerformanceObserver((list) => {
@@ -415,13 +415,13 @@ function setupPerformanceMonitoring() {
     }
 }
 
-// Initialize when DOM is ready
+
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeInteractiveUI);
 } else {
     initializeInteractiveUI();
 }
 
-// Setup keyboard shortcuts after DOM loads
+
 setupKeyboardShortcuts();
 setupPerformanceMonitoring();

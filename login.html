@@ -1,315 +1,584 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="app-name" content="FoodHub">
-    <meta name="application-name" content="FoodHub">
     <title>FoodHub - Sign In</title>
-    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/cart-sidebar.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #FF5200;
+            --primary-hover: #E64A00;
+            --bg-light: #F8F9FA;
+            --text-main: #2D2D2D;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i.input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9CA3AF;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 12px 12px 12px 48px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .input-wrapper input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255, 82, 0, 0.1);
+        }
+
+        .success-icon {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #10B981;
+            display: none;
+        }
+
+        .eye-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #9CA3AF;
+        }
+
+        .auth-btn {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .auth-btn:hover:not(:disabled) {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .auth-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .featured-item-card {
+            background: #fff;
+            border: 1px solid #F3F4F6;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .featured-item-card:hover {
+            border-color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .parallax-bg {
+            position: absolute;
+            right: -100px;
+            top: 100px;
+            font-size: 20rem;
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transform: translateY(150%);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-spinner {
+            animation: spin 1s linear infinite;
+        }
+
+
+        #mobileMenu {
+            display: none;
+        }
+
+        #mobileMenu.active {
+            display: flex;
+        }
+    </style>
 </head>
-<body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-content">
-                <a href="index.html" class="logo">
-                    <i class="fas fa-utensils"></i>
-                    <span>FoodHub</span>
-                </a>
-                <ul class="nav-menu">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="restaurants.html">Restaurants</a></li>
-                    <li><a href="offers.html">Offers</a></li>
-                    <li><a href="help.html">Help</a></li>
-                </ul>
-                <div class="nav-icons">
-                    <a href="cart.html" class="cart-btn">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-count" id="cartCount">0</span>
-                    </a>
-                </div>
+
+<body class="min-h-screen">
+
+
+
+
+    <div id="toast" class="toast">
+        <span id="toast-icon"></span>
+        <span id="toast-message"></span>
+    </div>
+
+
+    <nav class="navbar py-4">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 text-primary font-bold text-2xl"
+                style="color: var(--primary)">
+                <i class="fas fa-utensils"></i>
+                <span>FoodHub</span>
+            </a>
+
+
+            <div class="hidden md:flex gap-8 font-medium">
+                <a href="index.html" class="hover:text-orange-600 transition">Home</a>
+                <a href="#" class="hover:text-orange-600 transition">Restaurants</a>
+                <a href="#" class="hover:text-orange-600 transition">Offers</a>
+                <a href="#" class="hover:text-orange-600 transition">Help</a>
             </div>
+
+            <div class="flex items-center gap-4">
+                <a href="#" class="relative p-2 text-gray-600 hover:text-orange-600 transition">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cartCount"
+                        class="absolute -top-1 -right-1 bg-orange-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">0</span>
+                </a>
+                <button id="menuToggle" class="md:hidden text-gray-600 focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+
+        <div id="mobileMenu" class="md:hidden flex-col bg-white border-t border-gray-100 p-6 space-y-4 animate-fade-in">
+            <a href="#" class="font-medium hover:text-orange-600">Home</a>
+            <a href="#" class="font-medium hover:text-orange-600">Restaurants</a>
+            <a href="#" class="font-medium hover:text-orange-600">Offers</a>
+            <a href="#" class="font-medium hover:text-orange-600">Help</a>
         </div>
     </nav>
 
-    <!-- Login Section -->
-    <section class="auth-section">
-        <div class="auth-container">
-            <div class="auth-box">
-                <div class="auth-header">
-                    <h1>Welcome Back!</h1>
-                    <p>Sign in to your FoodHub account</p>
-                </div>
 
-                <form class="auth-form" id="loginForm">
-                    <div class="form-group">
-                        <label for="email">
-                            Email Address
-                            <span class="form-hint">We'll never share your email</span>
-                        </label>
-                        <div class="input-wrapper">
-                            <i class="fas fa-envelope input-icon"></i>
-                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
-                            <span class="success-icon" id="emailCheck">✓</span>
-                        </div>
-                        <span class="error-message" id="emailError"></span>
-                        <span class="success-message" id="emailSuccess">Email looks good!</span>
+    <main class="max-w-7xl mx-auto px-6 py-12 lg:py-20 relative">
+        <div class="parallax-bg" id="parallaxIcon">🍕</div>
+
+        <div class="grid lg:grid-cols-12 gap-12 items-start">
+
+
+            <div class="lg:col-span-7 xl:col-span-5">
+                <div class="auth-card p-8 md:p-12">
+                    <div class="mb-10">
+                        <h1 class="text-3xl font-bold mb-2">Welcome Back!</h1>
+                        <p class="text-gray-500">Sign in to your FoodHub account to start ordering.</p>
                     </div>
 
-                    <div class="form-group">
-                        <label for="password">
-                            Password
-                            <span class="form-hint">At least 6 characters</span>
-                        </label>
-                        <div class="password-input">
-                            <i class="fas fa-lock input-icon"></i>
-                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                            <button type="button" class="toggle-password" id="togglePassword">
-                                <i class="fas fa-eye"></i>
+                    <form id="loginForm" class="space-y-6">
+
+                        <div class="space-y-2">
+                            <label class="block font-semibold text-sm">Email Address</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope input-icon"></i>
+                                <input type="email" id="email" placeholder="name@company.com" required
+                                    autocomplete="off">
+                                <i class="fas fa-check-circle success-icon" id="emailCheck"></i>
+                            </div>
+                            <p id="emailError" class="text-red-500 text-xs mt-1 h-4"></p>
+                        </div>
+
+
+                        <div class="space-y-2">
+                            <div class="flex justify-between items-center">
+                                <label class="block font-semibold text-sm">Password</label>
+                                <button type="button" onclick="handleForgotPassword()"
+                                    class="text-xs font-semibold text-orange-600 hover:underline">Forgot
+                                    password?</button>
+                            </div>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock input-icon"></i>
+                                <input type="password" id="password" placeholder="••••••••" required
+                                    autocomplete="new-password">
+                                <span class="eye-toggle" onclick="togglePassword()">
+                                    <i class="fas fa-eye" id="eyeIcon"></i>
+                                </span>
+                            </div>
+                            <p id="passwordError" class="text-red-500 text-xs mt-1 h-4"></p>
+                        </div>
+
+
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" id="remember"
+                                class="w-4 h-4 accent-orange-600 rounded cursor-pointer">
+                            <label for="remember" class="text-sm text-gray-600 cursor-pointer">Keep me signed
+                                in</label>
+                        </div>
+
+                        <button type="submit" id="loginBtn"
+                            class="auth-btn w-full py-4 rounded-xl flex items-center justify-center gap-2">
+                            <span id="btnText">Sign In</span>
+                            <i class="fas fa-arrow-right" id="btnIcon"></i>
+                        </button>
+                    </form>
+
+                    <div class="relative my-8 text-center">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-200"></div>
+                        </div>
+                        <span class="relative px-4 bg-white text-gray-400 text-sm">or continue with</span>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button type="button" onclick="handleSocialLogin('Google')"
+                            class="flex items-center justify-center gap-2 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition">
+                            <i class="fab fa-google text-red-500"></i>
+                            <span class="text-sm font-semibold">Google</span>
+                        </button>
+                        <button type="button" onclick="handleSocialLogin('Facebook')"
+                            class="flex items-center justify-center gap-2 py-3 border border-gray-200 rounded-xl hover:bg-gray-50 transition">
+                            <i class="fab fa-facebook text-blue-600"></i>
+                            <span class="text-sm font-semibold">Facebook</span>
+                        </button>
+                    </div>
+
+                    <p class="text-center mt-10 text-gray-500 text-sm">
+                        Don't have an account?
+                        <a href="signup.html" class="text-orange-600 font-bold hover:underline">Sign Up</a>
+                    </p>
+                </div>
+            </div>
+
+
+            <div class="lg:col-span-5 xl:col-span-7 hidden lg:block">
+                <div class="pl-12">
+                    <h3 class="text-2xl font-bold mb-8 flex items-center gap-2">
+                        <span>🍽️</span> Today's Specials
+                    </h3>
+                    <div class="space-y-4 max-w-lg">
+                        <div class="featured-item-card p-4 flex items-center justify-between group">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center text-3xl">
+                                    🍣</div>
+                                <div>
+                                    <h4 class="font-bold group-hover:text-orange-600 transition">Sushi Deluxe</h4>
+                                    <p class="text-gray-500 text-sm">Fresh Atlantic salmon & avocado</p>
+                                    <span class="text-orange-600 font-bold mt-1 block">₹349</span>
+                                </div>
+                            </div>
+                            <button onclick="addToCart('Sushi Deluxe')"
+                                class="bg-gray-100 hover:bg-orange-600 hover:text-white p-3 rounded-xl transition">
+                                <i class="fas fa-plus"></i>
                             </button>
-                            <span class="success-icon" id="passwordCheck">✓</span>
                         </div>
-                        <span class="error-message" id="passwordError"></span>
-                        <span class="success-message" id="passwordSuccess">Password accepted!</span>
+
+                        <div class="featured-item-card p-4 flex items-center justify-between group">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl">
+                                    🍜</div>
+                                <div>
+                                    <h4 class="font-bold group-hover:text-orange-600 transition">Spicy Ramen</h4>
+                                    <p class="text-gray-500 text-sm">24-hour pork bone broth base</p>
+                                    <span class="text-orange-600 font-bold mt-1 block">₹249</span>
+                                </div>
+                            </div>
+                            <button onclick="addToCart('Spicy Ramen')"
+                                class="bg-gray-100 hover:bg-orange-600 hover:text-white p-3 rounded-xl transition">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+
+                        <div class="featured-item-card p-4 flex items-center justify-between group">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-3xl">
+                                    🥟</div>
+                                <div>
+                                    <h4 class="font-bold group-hover:text-orange-600 transition">Pork Gyoza</h4>
+                                    <p class="text-gray-500 text-sm">Hand-made steamed dumplings</p>
+                                    <span class="text-orange-600 font-bold mt-1 block">₹199</span>
+                                </div>
+                            </div>
+                            <button onclick="addToCart('Pork Gyoza')"
+                                class="bg-gray-100 hover:bg-orange-600 hover:text-white p-3 rounded-xl transition">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
 
-                    <div class="form-group checkbox">
-                        <div class="checkbox-wrapper">
-                            <input type="checkbox" id="remember" name="remember">
-                            <label for="remember">
-                                <span class="checkbox-custom"></span>
-                                Keep me signed in on this device
-                            </label>
-                        </div>
+                    <div class="mt-16 flex gap-8 opacity-50 grayscale hover:grayscale-0 transition duration-500">
+                        <div class="flex items-center gap-2"><i class="fas fa-shield-alt text-2xl"></i> <span
+                                class="text-sm font-semibold">Secure Payment</span></div>
+                        <div class="flex items-center gap-2"><i class="fas fa-truck text-2xl"></i> <span
+                                class="text-sm font-semibold">Fast Delivery</span></div>
                     </div>
-
-                    <button type="submit" class="auth-btn" id="loginBtn">
-                        <span class="btn-text">Sign In</span>
-                        <i class="fas fa-arrow-right btn-icon"></i>
-                    </button>
-                </form>
-
-                <div class="auth-divider">
-                    <span>or</span>
-                </div>
-
-                <div class="social-login">
-                    <button type="button" class="social-btn google">
-                        <i class="fab fa-google"></i> Google
-                    </button>
-                    <button type="button" class="social-btn facebook">
-                        <i class="fab fa-facebook"></i> Facebook
-                    </button>
-                </div>
-
-                <div class="auth-footer">
-                    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
-                    <p><a href="#forgot">Forgot Password?</a></p>
                 </div>
             </div>
 
-            <!-- Decorative Pizza Illustration -->
-            <div class="auth-illustration">
-                <div class="pizza-illustration">
-                    <img src="images/pizzza.png" alt="Delicious Pizza" id="scrollImage" class="pizza-image">
-                </div>
-            </div>
         </div>
-    </section>
+    </main>
 
-    <script src="js/app.js"></script>
-    <script src="js/interactive.js"></script>
     <script>
-        // Parallax scroll effect for pizza
-        document.addEventListener("DOMContentLoaded", function() {
-            const scrollImage = document.getElementById("scrollImage");
-            if (scrollImage) {
-                function updatePizzaPosition() {
-                    const scrollY = window.scrollY || window.pageYOffset;
-                    scrollImage.style.transform = `translateY(${-scrollY * 0.5}px)`;
+
+        let cartItemCount = parseInt(localStorage.getItem('foodhub_cart_count')) || 0;
+
+
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const emailCheck = document.getElementById('emailCheck');
+        const loginBtn = document.getElementById('loginBtn');
+        const btnText = document.getElementById('btnText');
+        const btnIcon = document.getElementById('btnIcon');
+        const toast = document.getElementById('toast');
+        const cartBadge = document.getElementById('cartCount');
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCartDisplay();
+
+            // Check for authentication errors in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('error')) {
+                const error = urlParams.get('error');
+                if (error === 'google_auth_failed') {
+                    showToast('Google Sign-In failed. Please try again.', 'error');
+                } else if (error === 'facebook_auth_failed') {
+                    showToast('Facebook Sign-In failed. Please try again.', 'error');
                 }
-                window.addEventListener("scroll", updatePizzaPosition, { passive: true });
-                updatePizzaPosition();
             }
         });
 
-        // Email validation
-        document.getElementById('email').addEventListener('input', function(e) {
-            const email = this.value;
-            const emailError = document.getElementById('emailError');
-            const emailSuccess = document.getElementById('emailSuccess');
-            const emailCheck = document.getElementById('emailCheck');
-            
-            if (email.length === 0) {
-                emailError.textContent = '';
-                emailSuccess.textContent = '';
+
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+            const icon = menuToggle.querySelector('i');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        });
+        function togglePassword() {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            const icon = document.getElementById('eyeIcon');
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
+        }
+
+
+        function addToCart(itemName) {
+
+            const items = {
+                'Sushi Deluxe': { id: 901, price: 349, image: 'images/fresh_sushi.png', restaurantId: 99, restaurantName: 'Login Specials' },
+                'Spicy Ramen': { id: 902, price: 249, image: 'images/asian_wok_dishes.png', restaurantId: 99, restaurantName: 'Login Specials' },
+                'Pork Gyoza': { id: 903, price: 199, image: 'images/asian_wok_dishes.png', restaurantId: 99, restaurantName: 'Login Specials' }
+            };
+
+            const itemData = items[itemName] || { id: Date.now(), price: 199, image: 'images/food-placeholder.jpg', restaurantId: 99, restaurantName: 'Login Specials' };
+
+
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+
+            const existingItem = cart.find(i => i.id === itemData.id);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: itemData.id,
+                    name: itemName,
+                    price: itemData.price,
+                    image: itemData.image,
+                    quantity: 1,
+                    restaurantId: itemData.restaurantId,
+                    restaurantName: itemData.restaurantName
+                });
+            }
+
+
+            localStorage.setItem('cart', JSON.stringify(cart));
+
+
+            updateCartDisplay();
+            showToast(`${itemName} added to cart!`, 'success');
+
+
+            if (typeof openCartSidebar === 'function' && document.getElementById('cartSidebar') && document.getElementById('cartSidebar').classList.contains('active')) {
+                renderCartSidebarItems();
+            }
+        }
+
+        function updateCartDisplay() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+            cartBadge.textContent = count;
+            cartBadge.style.display = count > 0 ? 'flex' : 'none';
+        }
+
+
+        function showToast(message, type = 'success') {
+            const toastMsg = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+
+            toastMsg.textContent = message;
+            toastIcon.innerHTML = type === 'success'
+                ? '<i class="fas fa-check-circle text-green-500 text-xl"></i>'
+                : '<i class="fas fa-exclamation-circle text-red-500 text-xl"></i>';
+
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+
+        const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+        emailInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            const error = document.getElementById('emailError');
+            if (val === '') { error.textContent = ''; emailCheck.style.display = 'none'; return; }
+            if (!EMAIL_REGEX.test(val)) {
+                error.textContent = 'Please enter a valid email address';
                 emailCheck.style.display = 'none';
-                this.parentElement.classList.remove('success');
-                return;
-            }
-            
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                emailError.textContent = 'Please enter a valid email';
-                emailSuccess.textContent = '';
-                emailCheck.style.display = 'none';
-                this.parentElement.classList.remove('success');
             } else {
-                emailError.textContent = '';
-                emailSuccess.textContent = 'Email looks good!';
-                emailCheck.style.display = 'inline';
-                this.parentElement.classList.add('success');
+                error.textContent = '';
+                emailCheck.style.display = 'block';
             }
         });
 
-        // Password validation
-        document.getElementById('password').addEventListener('input', function(e) {
-            const password = this.value;
-            const passwordError = document.getElementById('passwordError');
-            const passwordSuccess = document.getElementById('passwordSuccess');
-            const passwordCheck = document.getElementById('passwordCheck');
-            
-            if (password.length === 0) {
-                passwordError.textContent = '';
-                passwordSuccess.textContent = '';
-                passwordCheck.style.display = 'none';
-                this.parentElement.classList.remove('success');
-                return;
-            }
-            
-            if (password.length < 6) {
-                passwordError.textContent = 'Password must be at least 6 characters';
-                passwordSuccess.textContent = '';
-                passwordCheck.style.display = 'none';
-                this.parentElement.classList.remove('success');
-            } else {
-                passwordError.textContent = '';
-                passwordSuccess.textContent = 'Password accepted!';
-                passwordCheck.style.display = 'inline';
-                this.parentElement.classList.add('success');
-            }
+        passwordInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            const error = document.getElementById('passwordError');
+            if (val === '') { error.textContent = ''; return; }
+            error.textContent = val.length < 6 ? 'Password must be at least 6 characters' : '';
         });
 
-        // Toggle password visibility
-        document.getElementById('togglePassword').addEventListener('click', function(e) {
+
+        loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const passwordInput = document.getElementById('password');
-            const icon = this.querySelector('i');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-                this.parentElement.classList.add('password-visible');
-            } else {
-                passwordInput.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-                this.parentElement.classList.remove('password-visible');
-            }
-        });
 
-        // Focus effects
-        document.getElementById('email').addEventListener('focus', function() {
-            this.parentElement.classList.add('focused');
-        });
-        
-        document.getElementById('email').addEventListener('blur', function() {
-            this.parentElement.classList.remove('focused');
-        });
-
-        document.getElementById('password').addEventListener('focus', function() {
-            this.parentElement.classList.add('focused');
-        });
-        
-        document.getElementById('password').addEventListener('blur', function() {
-            this.parentElement.classList.remove('focused');
-        });
-
-        // Form submission
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const loginBtn = document.getElementById('loginBtn');
-            
-            // Validation
-            if (!email || !password) {
-                Toast.error('Please fill in all fields');
+            if (!EMAIL_REGEX.test(emailInput.value) || passwordInput.value.length < 6) {
+                showToast('Please fix the errors in the form', 'error');
                 return;
             }
-            
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                Toast.error('Please enter a valid email');
-                return;
-            }
-            
-            if (password.length < 6) {
-                Toast.error('Password must be at least 6 characters');
-                return;
-            }
-            
+
             // Show loading state
             loginBtn.disabled = true;
-            loginBtn.classList.add('loading');
-            loginBtn.querySelector('.btn-text').textContent = 'Signing In...';
-            
-            // Simulate login delay
-            setTimeout(() => {
-                // Save login state
-                const remember = document.getElementById('remember').checked;
-                if (remember) {
-                    localStorage.setItem('rememberedEmail', email);
+            btnText.textContent = 'Verifying...';
+            btnIcon.className = 'fas fa-circle-notch loading-spinner';
+
+            try {
+                const response = await api.login({
+                    email: emailInput.value.trim(),
+                    password: passwordInput.value
+                });
+
+                if (response.success) {
+                    if (document.getElementById('remember').checked) {
+                        localStorage.setItem('foodhub_remembered_email', emailInput.value);
+                    } else {
+                        localStorage.removeItem('foodhub_remembered_email');
+                    }
+
+                    showToast('Welcome back to FoodHub!', 'success');
+                    setTimeout(() => {
+                        btnText.textContent = 'Redirecting...';
+                        window.location.href = 'index.html';
+                    }, 1000);
+                } else {
+                    throw new Error(response.message || 'Invalid credentials');
                 }
-                localStorage.setItem('lastLogin', new Date().toISOString());
-                
-                Toast.success(`Welcome back, ${email.split('@')[0]}! 🎉`);
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
-            }, 1000);
-        });
-
-        // Social login buttons
-        document.querySelectorAll('.social-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const provider = this.classList.contains('google') ? 'Google' : 'Facebook';
-                this.disabled = true;
-                this.classList.add('loading');
-                Toast.success(`Connecting with ${provider}...`);
-                
-                setTimeout(() => {
-                    this.disabled = false;
-                    this.classList.remove('loading');
-                }, 2000);
-            });
-        });
-
-        // Load remembered email
-        window.addEventListener('DOMContentLoaded', function() {
-            const rememberedEmail = localStorage.getItem('rememberedEmail');
-            if (rememberedEmail) {
-                document.getElementById('email').value = rememberedEmail;
-                document.getElementById('remember').checked = true;
-                document.getElementById('email').parentElement.classList.add('success');
-                document.getElementById('emailSuccess').textContent = 'Email looks good!';
+            } catch (error) {
+                console.error('Login error:', error);
+                showToast(error.message, 'error');
+                loginBtn.disabled = false;
+                btnText.textContent = 'Sign In';
+                btnIcon.className = 'fas fa-arrow-right';
             }
-            
-            updateCartCount();
         });
 
-        // Update cart count
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            const count = cart.reduce((total, item) => total + item.quantity, 0);
-            document.getElementById('cartCount').textContent = count;
+
+        function handleSocialLogin(provider) {
+            const endpoint = provider === 'Google' ? 'google' : 'facebook';
+            // Use the API's base URL instead of hardcoded 5000
+            window.location.href = `${api.baseURL}/auth/${endpoint}`;
         }
+
+
+        function handleForgotPassword() {
+            if (!emailInput.value) {
+                showToast('Enter your email first!', 'error');
+            } else {
+                showToast(`Reset link sent to ${emailInput.value}`, 'success');
+            }
+        }
+
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            document.getElementById('parallaxIcon').style.transform = `translateY(${scrolled * 0.25}px)`;
+        });
     </script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/cart-handler.js"></script>
+    <script src="js/cart-sidebar.js"></script>
 </body>
+
 </html>
-
-
