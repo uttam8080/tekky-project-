@@ -53,7 +53,7 @@ class API {
       ...options,
       headers,
       mode: "cors",
-      cache: "default",
+      cache: "no-store",
     };
 
     try {
