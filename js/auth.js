@@ -123,26 +123,51 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+// Lock to prevent concurrent updates from causing race conditions
+let isUpdatingAuth = false;
+
 async function updateAuthUI() {
-  const isAuthenticated = api.isAuthenticated();
-  const user = await api.getCurrentUser();
+  if (isUpdatingAuth) return;
+  isUpdatingAuth = true;
 
-  const navIcons = document.querySelector(".nav-icons");
-  if (!navIcons) return;
+  try {
+    const isAuthenticated = api.isAuthenticated();
+    const user = await api.getCurrentUser();
 
-  // Clear ANY existing auth elements to prevent duplication
-  const existingContainer = navIcons.querySelector(".profile-menu-container");
-  if (existingContainer) existingContainer.remove();
+    // Target only the dedicated container for navigation icons/links
+    // This prevents duplication when multiple navbar elements (like nav-menu) are present
+    const navIconContainers = document.querySelectorAll(".nav-icons");
+    if (navIconContainers.length === 0) {
+      isUpdatingAuth = false;
+      return;
+    }
 
-  // Remove existing login/signup buttons (looking for specific classes or hrefs)
-  const existingAuthBtns = navIcons.querySelectorAll('a[href*="login.html"], a[href*="signup.html"]');
-  existingAuthBtns.forEach(btn => btn.remove());
+    navIconContainers.forEach(navIcons => {
+      // Clear ANY existing auth elements to prevent duplication
+      // We look for our own dynamically added elements AND static ones
+      const authSelectors = [
+        '.profile-menu-container',
+        '.nav-link-btn',
+        '.signup-btn',
+        '.login-btn',
+        '.auth-btn',
+        '.dynamic-auth', // Extra class for our own elements
+        'a[href*="login.html"]',
+        'a[href*="signup.html"]'
+      ];
 
-  if (isAuthenticated && user) {
-    if (!document.getElementById("profile-styles")) {
-      const style = document.createElement("style");
-      style.id = "profile-styles";
-      style.innerHTML = `
+      const existingAuthElements = navIcons.querySelectorAll(authSelectors.join(','));
+      existingAuthElements.forEach(el => el.remove());
+
+      // Final check: if something still exists that looks like auth, don't add more
+      // This is a safety net against multiple scripts or weird DOM states
+      if (navIcons.querySelector('.nav-link-btn, .profile-menu-container, .dynamic-auth')) return;
+
+      if (isAuthenticated && user) {
+        if (!document.getElementById("profile-styles")) {
+          const style = document.createElement("style");
+          style.id = "profile-styles";
+          style.innerHTML = `
                     .profile-menu-container { position: relative; margin-left: 15px; display: inline-block; }
                     .profile-avatar { 
                         width: 42px; height: 42px; border-radius: 50%; 
@@ -195,17 +220,17 @@ async function updateAuthUI() {
                     .save-btn-primary { flex: 1; background: #FF5200; color: white; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; }
                     .cancel-btn { flex: 1; background: #f3f4f6; color: #374151; border: none; padding: 8px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 13px; }
                 `;
-      document.head.appendChild(style);
-    }
+          document.head.appendChild(style);
+        }
 
-    const container = document.createElement("div");
-    container.className = "profile-menu-container";
+        const container = document.createElement("div");
+        container.className = "profile-menu-container";
 
-    const initials = (
-      user.firstName[0] + (user.lastName ? user.lastName[0] : "")
-    ).toUpperCase();
+        const initials = (
+          user.firstName[0] + (user.lastName ? user.lastName[0] : "")
+        ).toUpperCase();
 
-    container.innerHTML = `
+        container.innerHTML = `
                 <button class="profile-avatar" id="profileToggle">
                     ${initials}
                 </button>
@@ -242,100 +267,106 @@ async function updateAuthUI() {
                 </div>
             `;
 
-    navIcons.appendChild(container);
+        navIcons.appendChild(container);
 
-    const toggle = container.querySelector("#profileToggle");
-    const dropdown = container.querySelector("#profileDropdown");
-    const logout = container.querySelector("#logoutAction");
-    const editBtn = container.querySelector("#editProfileBtn");
-    const cancelBtn = container.querySelector("#cancelEditBtn");
-    const saveBtn = container.querySelector("#saveProfileBtn");
-    const listMode = container.querySelector("#dropdownListMode");
-    const editMode = container.querySelector("#dropdownEditMode");
+        const toggle = container.querySelector("#profileToggle");
+        const dropdown = container.querySelector("#profileDropdown");
+        const logout = container.querySelector("#logoutAction");
+        const editBtn = container.querySelector("#editProfileBtn");
+        const cancelBtn = container.querySelector("#cancelEditBtn");
+        const saveBtn = container.querySelector("#saveProfileBtn");
+        const listMode = container.querySelector("#dropdownListMode");
+        const editMode = container.querySelector("#dropdownEditMode");
 
-    toggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      dropdown.classList.toggle("active");
-    });
-
-    document.addEventListener("click", (e) => {
-      if (!container.contains(e.target)) {
-        dropdown.classList.remove("active");
-
-        setTimeout(() => {
-          listMode.style.display = "block";
-          editMode.style.display = "none";
-        }, 200);
-      }
-    });
-
-    logout.addEventListener("click", () => {
-      api.logout();
-      window.location.href = "index.html";
-    });
-
-    editBtn.addEventListener("click", () => {
-      listMode.style.display = "none";
-      editMode.style.display = "block";
-    });
-
-    cancelBtn.addEventListener("click", () => {
-      editMode.style.display = "none";
-      listMode.style.display = "block";
-    });
-
-    saveBtn.addEventListener("click", async () => {
-      const newFirst = document.getElementById("editFirstName").value;
-      const newLast = document.getElementById("editLastName").value;
-
-      try {
-        saveBtn.textContent = "Saving...";
-        const response = await api.updateProfile({
-          firstName: newFirst,
-          lastName: newLast,
+        toggle.addEventListener("click", (e) => {
+          e.stopPropagation();
+          dropdown.classList.toggle("active");
         });
 
-        const updatedUser = {
-          ...user,
-          firstName: newFirst,
-          lastName: newLast,
-        };
-        api.setCurrentUser(updatedUser);
+        document.addEventListener("click", (e) => {
+          if (!container.contains(e.target)) {
+            dropdown.classList.remove("active");
 
-        showNotification("Profile updated successfully!", "success");
+            setTimeout(() => {
+              listMode.style.display = "block";
+              editMode.style.display = "none";
+            }, 200);
+          }
+        });
 
-        updateAuthUI();
-      } catch (error) {
-        console.error(error);
+        logout.addEventListener("click", () => {
+          api.logout();
+          window.location.href = "index.html";
+        });
 
-        const updatedUser = {
-          ...user,
-          firstName: newFirst,
-          lastName: newLast,
-        };
-        api.setCurrentUser(updatedUser);
-        updateAuthUI();
+        editBtn.addEventListener("click", () => {
+          listMode.style.display = "none";
+          editMode.style.display = "block";
+        });
 
-        showNotification("Profile saved!", "success");
+        cancelBtn.addEventListener("click", () => {
+          editMode.style.display = "none";
+          listMode.style.display = "block";
+        });
+
+        saveBtn.addEventListener("click", async () => {
+          const newFirst = document.getElementById("editFirstName").value;
+          const newLast = document.getElementById("editLastName").value;
+
+          try {
+            saveBtn.textContent = "Saving...";
+            const response = await api.updateProfile({
+              firstName: newFirst,
+              lastName: newLast,
+            });
+
+            const updatedUser = {
+              ...user,
+              firstName: newFirst,
+              lastName: newLast,
+            };
+            api.setCurrentUser(updatedUser);
+
+            showNotification("Profile updated successfully!", "success");
+
+            updateAuthUI();
+          } catch (error) {
+            console.error(error);
+
+            const updatedUser = {
+              ...user,
+              firstName: newFirst,
+              lastName: newLast,
+            };
+            api.setCurrentUser(updatedUser);
+            updateAuthUI();
+
+            showNotification("Profile saved!", "success");
+          }
+        });
+
+      } else {
+        // User is NOT logged in. 
+        // We already cleared duplicates, so just add the buttons fresh.
+
+        const loginBtn = document.createElement("a");
+        loginBtn.href = "login.html";
+        loginBtn.className = "nav-link-btn dynamic-auth";
+        loginBtn.textContent = "Sign In";
+
+        const signupBtn = document.createElement("a");
+        signupBtn.href = "signup.html";
+        signupBtn.className = "nav-link-btn signup-btn dynamic-auth";
+        signupBtn.textContent = "Sign Up";
+
+        navIcons.appendChild(loginBtn);
+        navIcons.appendChild(signupBtn);
       }
     });
-
-  } else {
-    // User is NOT logged in. 
-    // We already cleared duplicates, so just add the buttons fresh.
-
-    const loginBtn = document.createElement("a");
-    loginBtn.href = "login.html";
-    loginBtn.className = "nav-link-btn";
-    loginBtn.textContent = "Sign In";
-
-    const signupBtn = document.createElement("a");
-    signupBtn.href = "signup.html";
-    signupBtn.className = "nav-link-btn signup-btn";
-    signupBtn.textContent = "Sign Up";
-
-    navIcons.appendChild(loginBtn);
-    navIcons.appendChild(signupBtn);
+  } catch (error) {
+    console.error("Auth UI Update Error:", error);
+  } finally {
+    isUpdatingAuth = false;
   }
 }
 
